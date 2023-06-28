@@ -1,0 +1,6 @@
+name: MinecartTrains
+version: '${project.version}'
+main: me.fridtjof.minecarttrains.MinecartTrains
+api-version: '1.20'
+authors: [ Fridtjof_DE ]
+website: https://www.fridtjof.me
