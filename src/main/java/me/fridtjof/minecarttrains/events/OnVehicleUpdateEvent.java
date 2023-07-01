@@ -57,19 +57,16 @@ public class OnVehicleUpdateEvent implements Listener {
             minecart.setVelocity(new Vector(0 ,0 ,0));
             return;
         }
-        //uniqueId = minecart.getMetadata("coupler").get(0).value().toString();
 
         uniqueId = data.get(key, PersistentDataType.STRING);
-        //System.out.println(uniqueId + "----");
 
         parent = Bukkit.getEntity(UUID.fromString(uniqueId));
         if(parent == null) {
             System.out.println("[ERROR] Minecart parent not found!");
-            //minecart.removeMetadata("coupler", plugin);
             data.remove(key);
             return;
         }
-        //todo sollte sowieso verhindert werden
+
         if(parent == minecart) {
             System.out.println("[ERROR] Minecart is coupled with itself!");
             return;

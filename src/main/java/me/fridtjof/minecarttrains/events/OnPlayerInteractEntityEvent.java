@@ -20,11 +20,8 @@ import java.util.UUID;
 
 public class OnPlayerInteractEntityEvent implements Listener {
 
+    // --> coupling tool
     static MinecartTrains plugin = MinecartTrains.getInstance();
-
-    //per player machen
-    //private UUID cartOne, cartTwo;
-    //private int selectedCart = 1;
 
     Map<String, Integer> selectedCarts = new HashMap<String, Integer>();
     Map<String, UUID> firstCarts = new HashMap<String, UUID>();
@@ -76,11 +73,6 @@ public class OnPlayerInteractEntityEvent implements Listener {
             selectedCarts.put(player.getUniqueId() + "", 1);
             player.sendMessage("Coupling (2/2) activated for " + minecart.getName());
 
-            //if distance
-
-            //MetadataValue meta1 = new FixedMetadataValue(plugin, cartOne);
-            //Bukkit.getEntity(cartTwo).setMetadata("coupler", meta1);
-
             Entity firstCart = Bukkit.getEntity(firstCarts.get(playerId));
             Entity secondCart = Bukkit.getEntity(secondCarts.get(playerId));
 
@@ -99,12 +91,5 @@ public class OnPlayerInteractEntityEvent implements Listener {
 
             player.sendMessage("Coupling successful!");
         }
-
-        /*MetadataValue meta = new FixedMetadataValue(plugin, minecart.getUniqueId());
-        minecart.setMetadata("coupler", meta);
-
-        player.sendMessage(minecart.getMetadata("coupler").get(0).value().toString());
-
-        event.setCancelled(true);*/
     }
 }

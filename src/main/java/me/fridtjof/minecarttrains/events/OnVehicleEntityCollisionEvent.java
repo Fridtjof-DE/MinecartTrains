@@ -1,6 +1,7 @@
 package me.fridtjof.minecarttrains.events;
 
 import me.fridtjof.minecarttrains.MinecartTrains;
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Vehicle;
@@ -13,6 +14,7 @@ public class OnVehicleEntityCollisionEvent implements Listener {
 
     static MinecartTrains plugin = MinecartTrains.getInstance();
 
+    // killing entities when run over
     @EventHandler
     public void onVehicleEntityCollision(VehicleEntityCollisionEvent event) {
         Vehicle vehicle = event.getVehicle();
@@ -22,6 +24,9 @@ public class OnVehicleEntityCollisionEvent implements Listener {
             return;
         }
         if(entity instanceof Minecart) {
+            return;
+        }
+        if(!(entity instanceof Damageable)) {
             return;
         }
 
@@ -35,8 +40,8 @@ public class OnVehicleEntityCollisionEvent implements Listener {
             return;
         }
 
-        //TODO kill entities
-        entity.remove();
+        Damageable damageable = (Damageable) entity;
+        damageable.setHealth(0);
         //System.out.println("" + vehicle.getVelocity().length());
     }
 }

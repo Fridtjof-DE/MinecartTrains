@@ -20,12 +20,7 @@ public final class MinecartTrains extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         new EventManager(this);
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable(){
-            public void run() {
-                //Every tick the code put here will perform
-            }
-
-        }, 0L, 1L);
+        
     }
 
     @Override
