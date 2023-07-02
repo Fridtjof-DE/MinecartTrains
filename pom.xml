@@ -77,7 +77,7 @@
             <artifactId>puddingapi</artifactId>
             <version>2.0.0-Snapshot</version>
             <scope>system</scope>
-            <systemPath>C:/Users/Fridtjof/Documents/GitHub/PuddingAPI/builds/PuddingAPI-2301202350.jar</systemPath>
+            <systemPath>C:/Users/Fridtjof/Documents/GitHub/PuddingAPI/builds/PuddingAPI-2307021844.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

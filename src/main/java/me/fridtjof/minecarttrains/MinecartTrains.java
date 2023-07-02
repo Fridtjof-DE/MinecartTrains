@@ -1,11 +1,7 @@
 package me.fridtjof.minecarttrains;
 
 import me.fridtjof.minecarttrains.events.EventManager;
-import me.fridtjof.puddingapi.bukkit.utils.DependencyChecker;
-import me.fridtjof.puddingapi.bukkit.utils.Logger;
-import me.fridtjof.puddingapi.bukkit.utils.Metrics;
-import me.fridtjof.puddingapi.bukkit.utils.PuddingAPIVersionChecker;
-import org.bukkit.Bukkit;
+import me.fridtjof.puddingapi.bukkit.utils.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class MinecartTrains extends JavaPlugin {
@@ -27,11 +23,11 @@ public final class MinecartTrains extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        new PuddingAPIVersionChecker(this, logger, 2301202350L);
+        new PuddingAPIVersionChecker(this, logger, 2307021844L);
 
         configManager = new ConfigManager(this);
         new EventManager(this);
-        //TODO Modrinth version checker
+        new ModrinthUpdateChecker(this,"plRff0I9", "spigot");
         new Metrics(this, 18918);
 
     }
