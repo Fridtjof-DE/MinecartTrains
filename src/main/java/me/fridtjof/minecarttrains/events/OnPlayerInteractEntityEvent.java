@@ -30,6 +30,8 @@ public class OnPlayerInteractEntityEvent implements Listener {
 
     NamespacedKey key = new NamespacedKey(plugin, "coupler");
 
+    Material couplingTool = Material.getMaterial(plugin.configManager.mainConfig.getConfig().getString("trains.coupling_tool"));
+
     @EventHandler
     public void onPlayerInteractEntityEvent(PlayerInteractEntityEvent event) {
 
@@ -43,7 +45,7 @@ public class OnPlayerInteractEntityEvent implements Listener {
         Entity target = event.getRightClicked();
         Minecart minecart;
 
-        if(material != Material.CHAIN) {
+        if(material != couplingTool) {
             return;
         }
 
@@ -54,6 +56,7 @@ public class OnPlayerInteractEntityEvent implements Listener {
 
         event.setCancelled(true);
 
+        //forget first selection
         if(selectedCarts.get(playerId) == null) {
             selectedCarts.put(playerId, 1);
             lastCouplings.put(playerId, System.currentTimeMillis());
@@ -67,29 +70,29 @@ public class OnPlayerInteractEntityEvent implements Listener {
         if(selectedCart == 1) {
             firstCarts.put(playerId, minecart.getUniqueId());
             selectedCarts.put(player.getUniqueId() + "", 2);
-            player.sendMessage("Coupling (1/2) activated for " + minecart.getName());
+            player.sendMessage(plugin.configManager.messagesFile.getConfig().getString("trains.coupling_1-2") + minecart.getName());
         } else if(selectedCart == 2) {
             secondCarts.put(playerId, minecart.getUniqueId());
             selectedCarts.put(player.getUniqueId() + "", 1);
-            player.sendMessage("Coupling (2/2) activated for " + minecart.getName());
+            player.sendMessage(plugin.configManager.messagesFile.getConfig().getString("trains.coupling_2-2") + minecart.getName());
 
             Entity firstCart = Bukkit.getEntity(firstCarts.get(playerId));
             Entity secondCart = Bukkit.getEntity(secondCarts.get(playerId));
 
             if(firstCart.getLocation().distance(secondCart.getLocation()) > 3) {
-                player.sendMessage("Coupling failed! - The minecarts are to far apart!");
+                player.sendMessage(plugin.configManager.messagesFile.getConfig().getString("trains.coupling_failed_distance"));
                 return;
             }
 
             if(firstCart == secondCart) {
-                player.sendMessage("Coupling failed! - Can't be coupled with itself!");
+                player.sendMessage(plugin.configManager.messagesFile.getConfig().getString("trains.coupling_failed_self"));
                 return;
             }
 
             PersistentDataContainer data = secondCart.getPersistentDataContainer();
             data.set(key, PersistentDataType.STRING, firstCarts.get(playerId) + "");
 
-            player.sendMessage("Coupling successful!");
+            player.sendMessage(plugin.configManager.messagesFile.getConfig().getString("trains.coupling_successful"));
         }
     }
 }

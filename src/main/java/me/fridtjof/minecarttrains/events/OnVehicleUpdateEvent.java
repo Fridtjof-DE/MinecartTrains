@@ -19,6 +19,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
 
 import java.util.UUID;
+import java.util.logging.Level;
 
 public class OnVehicleUpdateEvent implements Listener {
 
@@ -62,13 +63,13 @@ public class OnVehicleUpdateEvent implements Listener {
 
         parent = Bukkit.getEntity(UUID.fromString(uniqueId));
         if(parent == null) {
-            System.out.println("[ERROR] Minecart parent not found!");
             data.remove(key);
             return;
         }
 
         if(parent == minecart) {
-            System.out.println("[ERROR] Minecart is coupled with itself!");
+            plugin.getLogger().warning("Minecart is coupled with itself! - this shouldn't be possible!");
+            data.remove(key);
             return;
         }
 
