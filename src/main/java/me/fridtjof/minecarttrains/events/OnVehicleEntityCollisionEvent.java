@@ -17,6 +17,11 @@ public class OnVehicleEntityCollisionEvent implements Listener {
     // killing entities when run over
     @EventHandler
     public void onVehicleEntityCollision(VehicleEntityCollisionEvent event) {
+
+        if(!plugin.configManager.mainConfig.getConfig().getBoolean("trains.run_over_entities")) {
+            return;
+        }
+
         Vehicle vehicle = event.getVehicle();
         Entity  entity = event.getEntity();
 
@@ -36,7 +41,7 @@ public class OnVehicleEntityCollisionEvent implements Listener {
             }
         }
 
-        if(vehicle.getVelocity().length() < 1.8) {
+        if(vehicle.getVelocity().length() < plugin.configManager.mainConfig.getConfig().getDouble("trains.run_over_entities_min_velocity")) {
             return;
         }
 
