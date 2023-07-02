@@ -18,6 +18,7 @@
     <url>https://www.fridtjof.me</url>
 
     <build>
+        <finalName>${project.name}-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -70,6 +71,13 @@
             <artifactId>spigot-api</artifactId>
             <version>1.20.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.fridtjof</groupId>
+            <artifactId>puddingapi</artifactId>
+            <version>2.0.0-Snapshot</version>
+            <scope>system</scope>
+            <systemPath>C:/Users/Fridtjof/Documents/GitHub/PuddingAPI/builds/PuddingAPI-2301202350.jar</systemPath>
         </dependency>
     </dependencies>
 </project>
