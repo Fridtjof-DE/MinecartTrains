@@ -1,10 +1,8 @@
 package me.fridtjof.minecarttrains.events;
 
 import me.fridtjof.minecarttrains.MinecartTrains;
-import org.bukkit.entity.Damageable;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Minecart;
-import org.bukkit.entity.Vehicle;
+import org.bukkit.GameMode;
+import org.bukkit.entity.*;
 import org.bukkit.entity.minecart.RideableMinecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -46,7 +44,9 @@ public class OnVehicleEntityCollisionEvent implements Listener {
         }
 
         Damageable damageable = (Damageable) entity;
-        damageable.setHealth(0);
+        //damageable.setHealth(0); this also killed player in gamemode 1
+        damageable.damage(10000, vehicle);
+
         //System.out.println("" + vehicle.getVelocity().length());
     }
 }
