@@ -28,9 +28,9 @@ public class OnPlayerInteractEntityEvent implements Listener {
     Map<String, UUID> secondCarts = new HashMap<String, UUID>();
     Map<String, Long> lastCouplings = new HashMap<String, Long>();
 
-    NamespacedKey key = new NamespacedKey(plugin, "coupler");
-
     Material couplingTool = Material.getMaterial(plugin.configManager.mainConfig.getConfig().getString("trains.coupling_tool"));
+
+    LinkageManager linkageManager = new LinkageManager();
 
     @EventHandler
     public void onPlayerInteractEntityEvent(PlayerInteractEntityEvent event) {
@@ -89,8 +89,7 @@ public class OnPlayerInteractEntityEvent implements Listener {
                 return;
             }
 
-            PersistentDataContainer data = secondCart.getPersistentDataContainer();
-            data.set(key, PersistentDataType.STRING, firstCarts.get(playerId) + "");
+            linkageManager.setLink((Minecart) secondCart, firstCarts.get(playerId) + "");
 
             player.sendMessage(plugin.configManager.messagesFile.getConfig().getString("trains.coupling_successful"));
         }

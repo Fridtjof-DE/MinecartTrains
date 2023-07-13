@@ -24,8 +24,7 @@ import java.util.logging.Level;
 public class OnVehicleUpdateEvent implements Listener {
 
     static MinecartTrains plugin = MinecartTrains.getInstance();
-
-    NamespacedKey key = new NamespacedKey(plugin, "coupler");
+    LinkageManager linkageManager = new LinkageManager();
 
     @EventHandler
     public void onVehicleUpdate(VehicleUpdateEvent event) {
@@ -39,9 +38,7 @@ public class OnVehicleUpdateEvent implements Listener {
         }
         minecart = (Minecart) vehicle;
 
-        PersistentDataContainer data = minecart.getPersistentDataContainer();
-
-        if(!data.has(key, PersistentDataType.STRING)) {
+        if(!linkageManager.hasLink((minecart))) {
 
             //stopping furnace minecart on not powered power rail
             if(!(minecart instanceof PoweredMinecart)) {
@@ -59,17 +56,16 @@ public class OnVehicleUpdateEvent implements Listener {
             return;
         }
 
-        uniqueId = data.get(key, PersistentDataType.STRING);
+        parent = Bukkit.getEntity(linkageManager.getLinkUniqueId(minecart));
 
-        parent = Bukkit.getEntity(UUID.fromString(uniqueId));
         if(parent == null) {
-            data.remove(key);
+            linkageManager.removeLink(minecart);
             return;
         }
 
         if(parent == minecart) {
             plugin.getLogger().warning("Minecart is coupled with itself! - this shouldn't be possible!");
-            data.remove(key);
+            linkageManager.removeLink(minecart);
             return;
         }
 
@@ -78,7 +74,7 @@ public class OnVehicleUpdateEvent implements Listener {
         double speed = 1.0;
 
         if((distance > 3) || distance < 0.7) {
-            data.remove(key);
+            linkageManager.removeLink(minecart);
             minecart.setVelocity(new Vector(0, 0, 0));
             parent.setVelocity(new Vector(0, 0, 0));
         } else if(distance < 1.1) {
