@@ -44,7 +44,7 @@ public class ConfigManager {
         messagesFile.getConfig().options().header("This is the localization file.");
 
         messagesFile.getConfig().addDefault("trains.coupling_successful", "Coupling successful!");
-        messagesFile.getConfig().addDefault("trains.coupling_failed_distance", "Coupling failed! - The minecarts are to far apart!");
+        messagesFile.getConfig().addDefault("trains.coupling_failed_distance", "Coupling failed! - The minecarts are too far apart!");
         messagesFile.getConfig().addDefault("trains.coupling_failed_self", "Coupling failed! - Can't be coupled with itself!");
 
         messagesFile.getConfig().addDefault("trains.coupling_1-2", "Coupling (1/2) activated for ");
