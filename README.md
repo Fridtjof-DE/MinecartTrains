@@ -12,6 +12,7 @@
 
 Introducing Minecart Trains! Experience a whole new level of immersion as you connect minecarts together, transforming them into powerful and efficient trains.
 
+![](./docs/images/preview-image.png)
 ### Features:
  - linking minecarts to form a train
  - freezing furnace minecarts with non-powered booster rails (to stop trains)
