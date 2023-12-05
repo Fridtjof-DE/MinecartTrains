@@ -39,6 +39,12 @@ public class OnVehicleEntityCollisionEvent implements Listener {
             }
         }
 
+        //fixing rare situations where a player riding the cart was killed
+        if(entity.isInsideVehicle())
+        {
+            return;
+        }
+
         if(vehicle.getVelocity().length() < plugin.configManager.mainConfig.getConfig().getDouble("trains.run_over_entities_min_velocity")) {
             return;
         }
