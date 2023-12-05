@@ -3,7 +3,6 @@ package me.fridtjof.minecarttrains.events;
 import me.fridtjof.minecarttrains.MinecartTrains;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Player;
@@ -11,17 +10,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Logger;
 
-/**public class OnPlayerInteractEntityEvent implements Listener {
+public class NewOnPlayerInteractEntityEvent implements Listener
+{
 
     // --> coupling tool
     static MinecartTrains plugin = MinecartTrains.getInstance();
+    Logger logger = plugin.getLogger();
 
     Map<String, Integer> selectedCarts = new HashMap<String, Integer>();
     Map<String, UUID> firstCarts = new HashMap<String, UUID>();
@@ -30,17 +30,20 @@ import java.util.UUID;
 
     Material couplingTool = Material.getMaterial(plugin.configManager.mainConfig.getConfig().getString("trains.coupling_tool"));
 
-    LinkageManager linkageManager = new LinkageManager();
+    //LinkageManager linkageManager = new LinkageManager();
+    LinkageHandler linkageHandler = new LinkageHandler();
 
     @EventHandler
     public void onPlayerInteractEntityEvent(PlayerInteractEntityEvent event) {
 
-        if(event.getHand() != EquipmentSlot.HAND) {
+
+        if(event.getHand() != EquipmentSlot.HAND)
+        {
             return;
         }
 
         Player player = event.getPlayer();
-        String playerId = player.getUniqueId() + "";
+        String playerId = player.getUniqueId().toString();
         Material material = player.getInventory().getItemInMainHand().getType();
         Entity target = event.getRightClicked();
         Minecart minecart;
@@ -67,17 +70,32 @@ import java.util.UUID;
 
         int selectedCart = selectedCarts.get(playerId);
 
-        if(selectedCart == 1) {
+        if(selectedCart == 1)
+        {
+            if(hasAlreadyBothLinks(minecart, player))
+            {
+                return;
+            }
             firstCarts.put(playerId, minecart.getUniqueId());
-            selectedCarts.put(player.getUniqueId() + "", 2);
+            selectedCarts.put(player.getUniqueId().toString(), 2);
             player.sendMessage(plugin.configManager.messagesFile.getConfig().getString("trains.coupling_1-2") + minecart.getName());
         } else if(selectedCart == 2) {
+            if(hasAlreadyBothLinks(minecart, player))
+            {
+                return;
+            }
+
             secondCarts.put(playerId, minecart.getUniqueId());
-            selectedCarts.put(player.getUniqueId() + "", 1);
+            selectedCarts.put(player.getUniqueId().toString(), 1);
             player.sendMessage(plugin.configManager.messagesFile.getConfig().getString("trains.coupling_2-2") + minecart.getName());
 
-            Entity firstCart = Bukkit.getEntity(firstCarts.get(playerId));
-            Entity secondCart = Bukkit.getEntity(secondCarts.get(playerId));
+            Minecart firstCart = (Minecart) Bukkit.getEntity(firstCarts.get(playerId));
+            Minecart secondCart = (Minecart) Bukkit.getEntity(secondCarts.get(playerId));
+
+            if((firstCart == null) || (secondCart == null)) {
+                logger.info("Eins der Carts ist null");
+                return;
+            }
 
             if(firstCart.getLocation().distance(secondCart.getLocation()) > 3) {
                 player.sendMessage(plugin.configManager.messagesFile.getConfig().getString("trains.coupling_failed_distance"));
@@ -89,10 +107,36 @@ import java.util.UUID;
                 return;
             }
 
-            linkageManager.setLink((Minecart) secondCart, firstCarts.get(playerId) + "");
+            //linkageManager.setLink((Minecart) secondCart, firstCarts.get(playerId) + "");
+
+            if(!linkageHandler.hasLinkOne(firstCart))
+            {
+                linkageHandler.setLinkOne(firstCart, secondCart);
+            }
+            else
+            {
+                linkageHandler.setLinkTwo(firstCart, secondCart);
+            }
+
+            if(!linkageHandler.hasLinkOne(secondCart))
+            {
+                linkageHandler.setLinkOne(secondCart, firstCart);
+            }
+            else
+            {
+                linkageHandler.setLinkTwo(secondCart, firstCart);
+            }
 
             player.sendMessage(plugin.configManager.messagesFile.getConfig().getString("trains.coupling_successful"));
         }
     }
+
+    private boolean hasAlreadyBothLinks(Minecart cart, Player player)
+    {
+        if(linkageHandler.hasBothLinks(cart)) {
+            player.sendMessage("Das Cart hat schon zwei Links");
+            return true;
+        }
+        return false;
+    }
 }
-**/

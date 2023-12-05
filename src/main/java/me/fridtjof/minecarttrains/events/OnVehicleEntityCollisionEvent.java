@@ -44,9 +44,6 @@ public class OnVehicleEntityCollisionEvent implements Listener {
         }
 
         Damageable damageable = (Damageable) entity;
-        //damageable.setHealth(0); this also killed player in gamemode 1
         damageable.damage(10000, vehicle);
-
-        //System.out.println("" + vehicle.getVelocity().length());
     }
 }

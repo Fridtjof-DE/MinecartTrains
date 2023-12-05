@@ -1,8 +1,12 @@
 package me.fridtjof.minecarttrains;
 
 import me.fridtjof.minecarttrains.events.EventManager;
+import me.fridtjof.minecarttrains.events.ServerTickEvent;
 import me.fridtjof.puddingapi.bukkit.utils.*;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitScheduler;
+
+import java.lang.invoke.SerializedLambda;
 
 public final class MinecartTrains extends JavaPlugin {
 
@@ -27,9 +31,20 @@ public final class MinecartTrains extends JavaPlugin {
 
         configManager = new ConfigManager(this);
         new EventManager(this);
-        new ModrinthUpdateChecker(this,"plRff0I9", "spigot");
+        new ModrinthUpdateChecker(this, "plRff0I9", "spigot");
         new Metrics(this, 18918);
 
+
+        //minecart coupling stuff
+        ServerTickEvent serverTickEvent = new ServerTickEvent();
+
+        BukkitScheduler scheduler = getServer().getScheduler();
+        scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
+            @Override
+            public void run() {
+                serverTickEvent.tick();
+            }
+        }, 0L, 1L);
     }
 
     @Override
