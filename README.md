@@ -1,4 +1,4 @@
-[![API Badge](https://img.shields.io/badge/MC%20version-Spigot%20v1.20.1-blue?style=flat-square)](https://www.spigotmc.org/)
+[![API Badge](https://img.shields.io/badge/MC%20version-Spigot%20v1.20.x-blue?style=flat-square)](https://www.spigotmc.org/)
 [![Maintenance Badge](https://img.shields.io/maintenance/yes/2023?style=flat-square)]()
 [![Issue Badge](https://img.shields.io/github/issues/Fridtjof-DE/MinecartTrains?style=flat-square)](https://github.com/Fridtjof-DE/MinecartTrains/issues)
 [![Discord Online Badge](https://img.shields.io/discord/961799414647750717?label=Discord&style=flat-square)](https://discord.gg/fT6VJurHCT)
