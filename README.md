@@ -9,7 +9,7 @@
 [![bStats Players](https://img.shields.io/bstats/players/18918?style=flat-square)](https://bstats.org/plugin/bukkit/Minecart%20Trains/18918)
 [![bStats Server](https://img.shields.io/bstats/servers/18918?style=flat-square)](https://bstats.org/plugin/bukkit/Minecart%20Trains/18918)
 
-# <img src="./icon.png" data-canonical-src="./icon.png" width="32" height="32" /> Minecart Trains
+# <img src="./docs/images/icon.png" data-canonical-src="./icon.png" width="32" height="32" /> Minecart Trains
 
 Introducing Minecart Trains! Experience a whole new level of immersion as you connect minecarts together, transforming them into powerful and efficient trains.
 
