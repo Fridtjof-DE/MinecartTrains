@@ -53,7 +53,7 @@ If you want to make changes to a `dev-branch` of MinecartTrains you might need t
 
 If you also want to make changes to the PuddingAPI you'll need to have the [PuddingAPI](https://github.com/Fridtjof-DE/PuddingAPI) source installed. On more information on how to build PuddingAPI look at it's GitHub.
 
-Either way PuddingAPI has to be in the correct sister folder specified in the MinecartTrains `pom.xml`
+Either way PuddingAPI has to be in the correct sister folder specified in the MinecartTrains `pom.xml`.
 
 ### Building Minecart Trains
 
