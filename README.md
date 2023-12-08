@@ -15,10 +15,10 @@ Introducing Minecart Trains! Experience a whole new level of immersion as you co
 
 ![](./docs/images/preview-image.png)
 ### Features:
- - linking minecarts to form a train
- - freezing furnace minecarts with non-powered booster rails (to stop trains)
- - minecarts at high velocity kill mobs on the track
- - configuration file
+- linking minecarts to form a train
+- freezing furnace minecarts with non-powered booster rails (to stop trains)
+- minecarts at high velocity kill mobs on the track (configurable)
+- arrows can't destroy minecarts (configurable)
 
 ### How it works:
 The standard coupling tool is the chain. With this you click on two minecarts one after the other. The second one will follow the first one. With a train you work your way through from front to back. (I am working on making the order irrelevant).
