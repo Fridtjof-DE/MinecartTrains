@@ -12,7 +12,7 @@
     <name>MinecartTrains</name>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <url>https://www.fridtjof.me</url>
@@ -77,7 +77,7 @@
             <artifactId>puddingapi</artifactId>
             <version>2.0.0-Snapshot</version>
             <scope>system</scope>
-            <systemPath>C:/Users/Fridtjof/Documents/GitHub/PuddingAPI/builds/PuddingAPI-2307021844.jar</systemPath>
+            <systemPath>C:/Users/Fridtjof/Documents/GitHub/PuddingAPI/builds/PuddingAPI-2307062106.jar</systemPath>
         </dependency>
     </dependencies>
 </project>
