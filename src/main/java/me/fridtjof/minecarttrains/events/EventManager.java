@@ -15,6 +15,7 @@ public class EventManager implements Listener {
         getServer().getPluginManager().registerEvents((Listener) new OnPlayerInteractEntityEvent(), plugin);
         getServer().getPluginManager().registerEvents((Listener) new OnVehicleUpdateEvent(), plugin);
         getServer().getPluginManager().registerEvents((Listener) new OnVehicleEntityCollisionEvent(), plugin);
+        getServer().getPluginManager().registerEvents((Listener) new OnProjectileHitEvent(), plugin);
     }
 
 }

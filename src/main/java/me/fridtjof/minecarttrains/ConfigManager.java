@@ -34,6 +34,8 @@ public class ConfigManager {
         mainConfig.getConfig().addDefault("trains.run_over_entities_min_velocity", 1.8D);
         mainConfig.getConfig().addDefault("trains.coupling_tool", Material.CHAIN.toString());
 
+        mainConfig.getConfig().addDefault("trains.can_get_hit_by_arrows", false);
+
         mainConfig.getConfig().options().copyDefaults(true);
         mainConfig.save();
         logger.info("Successfully (re)loaded config.yml");
