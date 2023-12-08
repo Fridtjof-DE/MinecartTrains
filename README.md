@@ -77,5 +77,5 @@ Results will be in the `target` folder, with base name
 Copy this file over to the plugins folder of your Minecraft server. Also, don't forget to have copied the PuddingAPI jar as well, to your
 server's plugins folder.
 
-### bStats
+## bStats
 ![bStats](https://bstats.org/signatures/bukkit/Minecart%20Trains.svg)
