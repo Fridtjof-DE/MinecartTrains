@@ -16,6 +16,8 @@ public class EventManager implements Listener {
         getServer().getPluginManager().registerEvents((Listener) new OnVehicleUpdateEvent(), plugin);
         getServer().getPluginManager().registerEvents((Listener) new OnVehicleEntityCollisionEvent(), plugin);
         getServer().getPluginManager().registerEvents((Listener) new OnProjectileHitEvent(), plugin);
+        getServer().getPluginManager().registerEvents((Listener) new OnFuelEmptyEvent(), plugin);
+        getServer().getPluginManager().registerEvents((Listener) new OnVehicleCreateEvent(), plugin);
     }
 
 }

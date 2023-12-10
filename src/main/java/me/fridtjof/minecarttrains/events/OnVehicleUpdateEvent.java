@@ -26,6 +26,8 @@ public class OnVehicleUpdateEvent implements Listener {
     static MinecartTrains plugin = MinecartTrains.getInstance();
     LinkageManager linkageManager = new LinkageManager();
 
+    int fuelPerTick = plugin.configManager.mainConfig.getConfig().getInt("trains.fuel_consumption_per_tick");
+
     @EventHandler
     public void onVehicleUpdate(VehicleUpdateEvent event) {
         Vehicle vehicle = event.getVehicle();
@@ -38,13 +40,26 @@ public class OnVehicleUpdateEvent implements Listener {
         }
         minecart = (Minecart) vehicle;
 
+
+        //this if only in the current one way linking system
         if(!linkageManager.hasLink((minecart))) {
 
             //stopping furnace minecart on not powered power rail
             if(!(minecart instanceof PoweredMinecart)) {
                 return;
             }
-            Block block = minecart.getLocation().getBlock();
+
+            PoweredMinecart poweredCart = (PoweredMinecart) minecart;
+
+            int fuelAfterConsumption = poweredCart.getFuel() - fuelPerTick + 1;
+
+            if(fuelAfterConsumption < 0)
+            {
+                fuelAfterConsumption = 0;
+            }
+            poweredCart.setFuel(fuelAfterConsumption);
+
+            Block block = poweredCart.getLocation().getBlock();
             if(block.getType() != Material.POWERED_RAIL) {
                 return;
             }
@@ -52,7 +67,13 @@ public class OnVehicleUpdateEvent implements Listener {
             if(redstoneRail.isPowered()) {
                 return;
             }
-            minecart.setVelocity(new Vector(0 ,0 ,0));
+            poweredCart.setVelocity(new Vector(0 ,0 ,0));
+
+            //to stop fuel consumption just re-add the consumed
+            int fuelToReAdd = plugin.configManager.mainConfig.getConfig().getInt("trains.fuel_consumption_per_tick");
+            ((PoweredMinecart) poweredCart).setFuel(((PoweredMinecart) poweredCart).getFuel() + fuelPerTick);
+
+
             return;
         }
 
