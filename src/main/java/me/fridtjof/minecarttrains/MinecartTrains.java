@@ -31,9 +31,9 @@ public final class MinecartTrains extends JavaPlugin
 
         new PuddingAPIVersionChecker(this, logger, 2307021844L);
 
-        new RecipeManager();
-
         configManager = new ConfigManager(this);
+
+        new RecipeManager();
         new EventManager(this);
         new ModrinthUpdateChecker(this,"plRff0I9", "spigot");
         new Metrics(this, 18918);
