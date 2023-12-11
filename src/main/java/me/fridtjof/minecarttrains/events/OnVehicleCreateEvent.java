@@ -2,7 +2,6 @@ package me.fridtjof.minecarttrains.events;
 
 import me.fridtjof.minecarttrains.MinecartTrains;
 import org.bukkit.Material;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.minecart.StorageMinecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,6 +12,7 @@ public class OnVehicleCreateEvent implements Listener
 
     static MinecartTrains plugin = MinecartTrains.getInstance();
 
+    //create fuel cart
     @EventHandler
     public void onVehicleCreateEvent(VehicleCreateEvent event)
     {

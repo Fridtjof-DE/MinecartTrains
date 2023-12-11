@@ -1,6 +1,6 @@
 package me.fridtjof.minecarttrains.events;
 
-import me.fridtjof.minecarttrains.LinkageManager;
+import me.fridtjof.minecarttrains.managers.LinkageManager;
 import me.fridtjof.minecarttrains.MinecartTrains;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -38,6 +38,7 @@ public class OnVehicleUpdateEventLowestPriority implements Listener
 
         PoweredMinecart cart = (PoweredMinecart) vehicle;
 
+        //TODO
         //maybe adding for particles
         /*if(cart.getFuel() != 0)
         {

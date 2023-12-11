@@ -1,6 +1,6 @@
 package me.fridtjof.minecarttrains.events;
 
-import me.fridtjof.minecarttrains.LinkageManager;
+import me.fridtjof.minecarttrains.managers.LinkageManager;
 import me.fridtjof.minecarttrains.MinecartTrains;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -16,7 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class OnPlayerInteractEntityEvent implements Listener {
+public class OnPlayerInteractEntityEvent implements Listener
+{
 
     // --> coupling tool
     static MinecartTrains plugin = MinecartTrains.getInstance();
@@ -31,9 +32,11 @@ public class OnPlayerInteractEntityEvent implements Listener {
     LinkageManager linkageManager = new LinkageManager();
 
     @EventHandler
-    public void onPlayerInteractEntityEvent(PlayerInteractEntityEvent event) {
+    public void onPlayerInteractEntityEvent(PlayerInteractEntityEvent event)
+    {
 
-        if(event.getHand() != EquipmentSlot.HAND) {
+        if(event.getHand() != EquipmentSlot.HAND)
+        {
             return;
         }
 
@@ -43,11 +46,13 @@ public class OnPlayerInteractEntityEvent implements Listener {
         Entity target = event.getRightClicked();
         Minecart minecart;
 
-        if(material != couplingTool) {
+        if(material != couplingTool)
+        {
             return;
         }
 
-        if(!(target instanceof Minecart)) {
+        if(!(target instanceof Minecart))
+        {
             return;
         }
         minecart = (Minecart) target;
@@ -55,21 +60,27 @@ public class OnPlayerInteractEntityEvent implements Listener {
         event.setCancelled(true);
 
         //forget first selection
-        if(selectedCarts.get(playerId) == null) {
+        if(selectedCarts.get(playerId) == null)
+        {
             selectedCarts.put(playerId, 1);
             lastCouplings.put(playerId, System.currentTimeMillis());
-        } else if(lastCouplings.get(playerId) < System.currentTimeMillis() - 10000) {
+        }
+        else if(lastCouplings.get(playerId) < System.currentTimeMillis() - 10000)
+        {
             selectedCarts.put(playerId, 1);
             lastCouplings.put(playerId, System.currentTimeMillis());
         }
 
         int selectedCart = selectedCarts.get(playerId);
 
-        if(selectedCart == 1) {
+        if(selectedCart == 1)
+        {
             firstCarts.put(playerId, minecart.getUniqueId());
             selectedCarts.put(player.getUniqueId() + "", 2);
             player.sendMessage(plugin.configManager.messagesFile.getConfig().getString("trains.coupling_1-2") + minecart.getName());
-        } else if(selectedCart == 2) {
+        }
+        else if(selectedCart == 2)
+        {
             secondCarts.put(playerId, minecart.getUniqueId());
             selectedCarts.put(player.getUniqueId() + "", 1);
             player.sendMessage(plugin.configManager.messagesFile.getConfig().getString("trains.coupling_2-2") + minecart.getName());
@@ -77,12 +88,14 @@ public class OnPlayerInteractEntityEvent implements Listener {
             Entity firstCart = Bukkit.getEntity(firstCarts.get(playerId));
             Entity secondCart = Bukkit.getEntity(secondCarts.get(playerId));
 
-            if(firstCart.getLocation().distance(secondCart.getLocation()) > 3) {
+            if(firstCart.getLocation().distance(secondCart.getLocation()) > 3)
+            {
                 player.sendMessage(plugin.configManager.messagesFile.getConfig().getString("trains.coupling_failed_distance"));
                 return;
             }
 
-            if(firstCart == secondCart) {
+            if(firstCart == secondCart)
+            {
                 player.sendMessage(plugin.configManager.messagesFile.getConfig().getString("trains.coupling_failed_self"));
                 return;
             }

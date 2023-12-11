@@ -1,5 +1,6 @@
-package me.fridtjof.minecarttrains;
+package me.fridtjof.minecarttrains.managers;
 
+import me.fridtjof.minecarttrains.MinecartTrains;
 import me.fridtjof.puddingapi.bukkit.utils.RecipeMaker;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

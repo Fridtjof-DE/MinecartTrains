@@ -1,6 +1,6 @@
 package me.fridtjof.minecarttrains.events;
 
-import me.fridtjof.minecarttrains.LinkageManager;
+import me.fridtjof.minecarttrains.managers.LinkageManager;
 import me.fridtjof.minecarttrains.MinecartTrains;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -16,7 +16,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleUpdateEvent;
 import org.bukkit.util.Vector;
 
-public class OnVehicleUpdateEvent implements Listener {
+public class OnVehicleUpdateEvent implements Listener
+{
 
     static MinecartTrains plugin = MinecartTrains.getInstance();
     LinkageManager linkageManager = new LinkageManager();
@@ -24,23 +25,27 @@ public class OnVehicleUpdateEvent implements Listener {
     int fuelPerTick = plugin.configManager.mainConfig.getConfig().getInt("trains.fuel_consumption_per_tick");
 
     @EventHandler
-    public void onVehicleUpdate(VehicleUpdateEvent event) {
+    public void onVehicleUpdate(VehicleUpdateEvent event)
+    {
         Vehicle vehicle = event.getVehicle();
         Minecart minecart;
         String uniqueId;
         Entity parent;
 
-        if(!(vehicle instanceof Minecart)) {
+        if(!(vehicle instanceof Minecart))
+        {
             return;
         }
         minecart = (Minecart) vehicle;
 
 
         //this if only in the current one way linking system
-        if(!linkageManager.hasLink((minecart))) {
+        if(!linkageManager.hasLink((minecart)))
+        {
 
             //stopping furnace minecart on not powered power rail
-            if(!(minecart instanceof PoweredMinecart)) {
+            if(!(minecart instanceof PoweredMinecart))
+            {
                 return;
             }
 
@@ -74,12 +79,14 @@ public class OnVehicleUpdateEvent implements Listener {
 
         parent = Bukkit.getEntity(linkageManager.getLinkUniqueId(minecart));
 
-        if(parent == null) {
+        if(parent == null)
+        {
             linkageManager.removeLink(minecart);
             return;
         }
 
-        if(parent == minecart) {
+        if(parent == minecart)
+        {
             plugin.getLogger().warning("Minecart is coupled with itself! - this shouldn't be possible!");
             linkageManager.removeLink(minecart);
             return;
@@ -89,18 +96,24 @@ public class OnVehicleUpdateEvent implements Listener {
 
         double speed = 1.0;
 
-        if((distance > 3) || distance < 0.7) {
+        if((distance > 3) || distance < 0.7)
+        {
             linkageManager.removeLink(minecart);
             minecart.setVelocity(new Vector(0, 0, 0));
             parent.setVelocity(new Vector(0, 0, 0));
-        } else if(distance < 1.1) {
+        }
+        else if(distance < 1.1)
+        {
             moveToward(minecart, parent, speed, (distance - 1.2));
-        } else if(distance > 1.3) {
+        }
+        else if(distance > 1.3)
+        {
             moveToward(minecart, parent, speed, (distance - 1.2));
         }
     }
 
-    public void moveToward(Entity child, Entity parent, double speed, double distance){
+    public void moveToward(Entity child, Entity parent, double speed, double distance)
+    {
         Location childLoc = child.getLocation();
         Location parentLoc = parent.getLocation();
 

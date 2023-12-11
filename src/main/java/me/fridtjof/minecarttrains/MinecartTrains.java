@@ -1,17 +1,23 @@
 package me.fridtjof.minecarttrains;
 
+import me.fridtjof.minecarttrains.managers.ConfigManager;
+import me.fridtjof.minecarttrains.managers.EventManager;
+import me.fridtjof.minecarttrains.managers.RecipeManager;
 import me.fridtjof.puddingapi.bukkit.utils.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class MinecartTrains extends JavaPlugin {
+public final class MinecartTrains extends JavaPlugin
+{
 
     private static MinecartTrains instance;
 
-    public MinecartTrains() {
+    public MinecartTrains()
+    {
         instance = this;
     }
 
-    public static MinecartTrains getInstance() {
+    public static MinecartTrains getInstance()
+    {
         return instance;
     }
 
@@ -20,7 +26,8 @@ public final class MinecartTrains extends JavaPlugin {
     public ConfigManager configManager;
 
     @Override
-    public void onEnable() {
+    public void onEnable()
+    {
 
         new PuddingAPIVersionChecker(this, logger, 2307021844L);
 
@@ -34,7 +41,8 @@ public final class MinecartTrains extends JavaPlugin {
     }
 
     @Override
-    public void onDisable() {
+    public void onDisable()
+    {
 
     }
 }

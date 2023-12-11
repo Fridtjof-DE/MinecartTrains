@@ -1,30 +1,34 @@
-package me.fridtjof.minecarttrains;
+package me.fridtjof.minecarttrains.managers;
 
 import me.fridtjof.puddingapi.bukkit.utils.Logger;
 import me.fridtjof.puddingapi.bukkit.utils.YamlConfig;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class ConfigManager {
+public class ConfigManager
+{
 
     JavaPlugin plugin;
 
     private Logger logger;
     public YamlConfig mainConfig, lobbyConfig, dataFile, messagesFile;
 
-    public ConfigManager(JavaPlugin plugin) {
+    public ConfigManager(JavaPlugin plugin)
+    {
         this.plugin = plugin;
         logger = new Logger(plugin);
         reloadConfigs();
     }
 
-    public void reloadConfigs() {
+    public void reloadConfigs()
+    {
         loadMainConfig();
         loadMessagesFile();
     }
 
 
-    public void loadMainConfig() {
+    public void loadMainConfig()
+    {
         mainConfig = new YamlConfig(plugin.getDataFolder(), "config");
 
         //TODO change some _ to . in v2.0.0
@@ -49,7 +53,8 @@ public class ConfigManager {
         logger.info("Successfully (re)loaded config.yml");
     }
 
-    public void loadMessagesFile() {
+    public void loadMessagesFile()
+    {
         messagesFile = new YamlConfig(plugin.getDataFolder(), "messages");
         messagesFile.getConfig().options().header("This is the localization file.");
 

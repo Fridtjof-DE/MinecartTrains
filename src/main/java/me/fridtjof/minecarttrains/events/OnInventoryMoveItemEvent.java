@@ -14,6 +14,7 @@ public class OnInventoryMoveItemEvent implements Listener
 
     private final String FUEL_CART_NAME = plugin.configManager.mainConfig.getConfig().getString("trains.fuel_cart_name");
 
+    //stop hoppers from unloading fuel carts
     @EventHandler
     public void onInventoryMoveItemEvent(InventoryMoveItemEvent event)
     {
