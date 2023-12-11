@@ -92,7 +92,7 @@ public class OnFuelEmptyEvent implements Listener
             return false;
         }
 
-        if (cart.getCustomName().equalsIgnoreCase("Tender")) {
+        if (cart.getCustomName().equalsIgnoreCase(MinecartTrains.TENDER_NAME)) {
             return true;
         }
         return false;
