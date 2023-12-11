@@ -15,15 +15,17 @@ public class RecipeManager
 
     static MinecartTrains plugin = MinecartTrains.getInstance();
 
+    private final String FUEL_CART_NAME = plugin.configManager.mainConfig.getConfig().getString("trains.fuel_cart_name");
+
     public RecipeManager()
     {
         //Tender recipe
         ItemStack tenderItemStack = new ItemStack(Material.CHEST_MINECART);
         ItemMeta tenderItemMeta = tenderItemStack.getItemMeta();
-        tenderItemMeta.setDisplayName(MinecartTrains.TENDER_NAME);
+        tenderItemMeta.setDisplayName(FUEL_CART_NAME);
         tenderItemStack.setItemMeta(tenderItemMeta);
 
-        NamespacedKey tenderKey = new NamespacedKey(plugin, MinecartTrains.TENDER_NAME.toLowerCase());
+        NamespacedKey tenderKey = new NamespacedKey(plugin, FUEL_CART_NAME.toLowerCase());
 
         ShapelessRecipe tenderRecipe = new ShapelessRecipe(tenderKey, tenderItemStack);
 

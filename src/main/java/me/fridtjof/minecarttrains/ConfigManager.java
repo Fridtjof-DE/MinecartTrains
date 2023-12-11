@@ -41,7 +41,8 @@ public class ConfigManager {
         mainConfig.getConfig().addDefault("trains.can_get_hit_by_arrows", false);
 
         mainConfig.getConfig().addDefault("trains.fuel_consumption_per_tick", 1);
-        mainConfig.getConfig().addDefault("trains.fuel_refill_only_from_carts_named_tender", true);
+        mainConfig.getConfig().addDefault("trains.fuel_refill_only_from_fuel_cart", true);
+        mainConfig.getConfig().addDefault("trains.fuel_cart_name", "Tender");
 
         mainConfig.getConfig().options().copyDefaults(true);
         mainConfig.save();

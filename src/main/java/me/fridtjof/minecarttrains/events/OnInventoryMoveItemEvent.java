@@ -12,6 +12,8 @@ public class OnInventoryMoveItemEvent implements Listener
 
     static MinecartTrains plugin = MinecartTrains.getInstance();
 
+    private final String FUEL_CART_NAME = plugin.configManager.mainConfig.getConfig().getString("trains.fuel_cart_name");
+
     @EventHandler
     public void onInventoryMoveItemEvent(InventoryMoveItemEvent event)
     {
@@ -32,7 +34,7 @@ public class OnInventoryMoveItemEvent implements Listener
             return;
         }
 
-        if(cart.getCustomName().equalsIgnoreCase(MinecartTrains.TENDER_NAME))
+        if(cart.getCustomName().equalsIgnoreCase(FUEL_CART_NAME))
         {
             event.setCancelled(true);
         }

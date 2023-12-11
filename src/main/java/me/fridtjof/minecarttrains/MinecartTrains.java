@@ -20,8 +20,6 @@ public final class MinecartTrains extends JavaPlugin {
 
     public ConfigManager configManager;
 
-    public static final String TENDER_NAME = "Tender";
-
     @Override
     public void onEnable() {
 
