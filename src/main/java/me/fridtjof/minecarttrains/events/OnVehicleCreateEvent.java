@@ -12,6 +12,8 @@ public class OnVehicleCreateEvent implements Listener
 
     static MinecartTrains plugin = MinecartTrains.getInstance();
 
+    private final String FUEL_CART_NAME = plugin.configManager.mainConfig.getConfig().getString("trains.fuel_cart_name");
+
     //create fuel cart
     @EventHandler
     public void onVehicleCreateEvent(VehicleCreateEvent event)
@@ -28,7 +30,7 @@ public class OnVehicleCreateEvent implements Listener
             return;
         }
 
-        if(!cart.getCustomName().equalsIgnoreCase("Tender"))
+        if(!cart.getCustomName().equalsIgnoreCase(FUEL_CART_NAME))
         {
             return;
         }
