@@ -7,7 +7,6 @@ import org.bukkit.entity.minecart.StorageMinecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleCreateEvent;
-import org.bukkit.material.MaterialData;
 
 public class OnVehicleCreateEvent implements Listener
 {
