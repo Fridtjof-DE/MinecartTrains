@@ -20,10 +20,14 @@ public final class MinecartTrains extends JavaPlugin {
 
     public ConfigManager configManager;
 
+    public static final String TENDER_NAME = "Tender";
+
     @Override
     public void onEnable() {
 
         new PuddingAPIVersionChecker(this, logger, 2307021844L);
+
+        new RecipeManager();
 
         configManager = new ConfigManager(this);
         new EventManager(this);
