@@ -42,7 +42,7 @@ public class ConfigManager {
 
         mainConfig.getConfig().addDefault("trains.fuel_consumption_per_tick", 1);
         mainConfig.getConfig().addDefault("trains.fuel_refill_only_from_fuel_cart", true);
-        mainConfig.getConfig().addDefault("trains.fuel_cart_name", "Tender");
+        mainConfig.getConfig().addDefault("trains.fuel_cart_name", "Coal Cart");
 
         mainConfig.getConfig().options().copyDefaults(true);
         mainConfig.save();

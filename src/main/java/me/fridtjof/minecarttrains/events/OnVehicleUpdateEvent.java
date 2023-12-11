@@ -1,10 +1,10 @@
 package me.fridtjof.minecarttrains.events;
 
+import me.fridtjof.minecarttrains.LinkageManager;
 import me.fridtjof.minecarttrains.MinecartTrains;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.RedstoneRail;
 import org.bukkit.entity.Entity;
@@ -14,12 +14,7 @@ import org.bukkit.entity.minecart.PoweredMinecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleUpdateEvent;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.util.Vector;
-
-import java.util.UUID;
-import java.util.logging.Level;
 
 public class OnVehicleUpdateEvent implements Listener {
 

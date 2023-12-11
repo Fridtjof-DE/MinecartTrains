@@ -1,4 +1,4 @@
-package me.fridtjof.minecarttrains.events;
+package me.fridtjof.minecarttrains;
 
 import me.fridtjof.minecarttrains.MinecartTrains;
 import org.bukkit.NamespacedKey;

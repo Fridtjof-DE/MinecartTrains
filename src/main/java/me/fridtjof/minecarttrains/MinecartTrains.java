@@ -1,6 +1,5 @@
 package me.fridtjof.minecarttrains;
 
-import me.fridtjof.minecarttrains.events.EventManager;
 import me.fridtjof.puddingapi.bukkit.utils.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
