@@ -5,6 +5,8 @@ import me.fridtjof.puddingapi.bukkit.utils.YamlConfig;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Collections;
+
 public class ConfigManager
 {
 
@@ -33,7 +35,7 @@ public class ConfigManager
 
         //TODO change some _ to . in v2.0.0
 
-        mainConfig.getConfig().options().header("This is the main configuration file");
+        mainConfig.getConfig().options().setHeader(Collections.singletonList("This is the main configuration file"));
 
         mainConfig.getConfig().addDefault("config_version", 1);
 
