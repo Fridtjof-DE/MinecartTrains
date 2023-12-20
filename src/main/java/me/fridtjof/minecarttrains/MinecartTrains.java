@@ -29,7 +29,7 @@ public final class MinecartTrains extends JavaPlugin
     public void onEnable()
     {
 
-        new PuddingAPIVersionChecker(this, logger, 2307021844L);
+        new PuddingAPIVersionChecker(this, logger, 2312201531L);
 
         configManager = new ConfigManager(this);
 

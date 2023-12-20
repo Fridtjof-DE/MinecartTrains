@@ -14,7 +14,7 @@
     <properties>
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <puddingapi.jar>${project.basedir}/../PuddingAPI/builds/PuddingAPI-2307062106.jar</puddingapi.jar>
+        <puddingapi.jar>${project.basedir}/../PuddingAPI/builds/PuddingAPI-2312201531.jar</puddingapi.jar>
     </properties>
 
     <url>https://www.fridtjof.me</url>

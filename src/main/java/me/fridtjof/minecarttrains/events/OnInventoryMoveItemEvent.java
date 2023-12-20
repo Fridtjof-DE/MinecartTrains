@@ -1,6 +1,7 @@
 package me.fridtjof.minecarttrains.events;
 
 import me.fridtjof.minecarttrains.MinecartTrains;
+import me.fridtjof.puddingapi.bukkit.items.HopperUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Hopper;
 import org.bukkit.entity.minecart.StorageMinecart;
@@ -63,9 +64,9 @@ public class OnInventoryMoveItemEvent implements Listener
             event.setCancelled(true);
 
             //rearrange to possibly let other itemstacks get through
-            if(!rearrangeHopper(event.getSource(), Material.COAL))
+            if(!HopperUtils.rearrangeHopper(event.getSource(), Material.COAL))
             {
-                if(!rearrangeHopper(event.getSource(), Material.CHARCOAL))
+                if(!HopperUtils.rearrangeHopper(event.getSource(), Material.CHARCOAL))
                 {
                     //rearranging was not successful
                     return;
@@ -87,37 +88,5 @@ public class OnInventoryMoveItemEvent implements Listener
         }
 
         return false;
-    }
-
-    public boolean rearrangeHopper(Inventory inventory, Material wantedMaterial)
-    {
-
-        //check for item
-        if(!inventory.contains(wantedMaterial))
-        {
-            return false;
-        }
-
-        //check where item is at
-        int slot = 0;
-        for(ItemStack itemStack : inventory.getContents())
-        {
-
-            if((itemStack != null) && (itemStack.getType() == wantedMaterial))
-            {
-                break;
-            }
-            slot++;
-        }
-
-        //get itemstacks to rearrange
-        ItemStack firstItemStack = inventory.getItem(0);
-        ItemStack wantedItemStack = inventory.getItem(slot);
-
-        //rearrange itemstacks
-        inventory.setItem(0, wantedItemStack);
-        inventory.setItem(slot, firstItemStack);
-
-        return true;
     }
 }
