@@ -1,6 +1,7 @@
 package me.fridtjof.minecarttrains.events;
 
 import me.fridtjof.minecarttrains.MinecartTrains;
+import org.bukkit.Material;
 import org.bukkit.block.Hopper;
 import org.bukkit.entity.minecart.StorageMinecart;
 import org.bukkit.event.EventHandler;
@@ -16,7 +17,7 @@ public class OnInventoryMoveItemEvent implements Listener
 
     //stop hoppers from unloading fuel carts
     @EventHandler
-    public void onInventoryMoveItemEvent(InventoryMoveItemEvent event)
+    public void onMoveItemOutOffFuelCartEvent(InventoryMoveItemEvent event)
     {
         if(!(event.getSource().getHolder() instanceof StorageMinecart))
         {
@@ -28,16 +29,45 @@ public class OnInventoryMoveItemEvent implements Listener
             return;
         }
 
-        StorageMinecart cart = (StorageMinecart) event.getSource().getHolder();
+        if(isFuelCart((StorageMinecart) event.getSource().getHolder()))
+        {
+            event.setCancelled(true);
+        }
+    }
 
-        if(cart.getCustomName() == null)
+    //allow hoppers to fill just coal in carts
+    //TODO if a slot is occupied by a non coal item, the slots after that wont be unloaded
+    @EventHandler
+    public void onMoveItemIntoFuelCartEvent(InventoryMoveItemEvent event)
+    {
+        if(!(event.getDestination().getHolder() instanceof StorageMinecart))
         {
             return;
         }
 
-        if(cart.getCustomName().equalsIgnoreCase(FUEL_CART_NAME))
+        if((event.getItem().getType() == Material.COAL) || (event.getItem().getType() == Material.CHARCOAL))
+        {
+            return;
+        }
+
+        if(isFuelCart((StorageMinecart) event.getDestination().getHolder()))
         {
             event.setCancelled(true);
         }
+    }
+
+    public boolean isFuelCart(StorageMinecart cart)
+    {
+        if(cart.getCustomName() == null)
+        {
+            return false;
+        }
+
+        if(cart.getCustomName().equalsIgnoreCase(FUEL_CART_NAME))
+        {
+            return true;
+        }
+
+        return false;
     }
 }
