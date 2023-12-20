@@ -20,18 +20,26 @@ Introducing Minecart Trains! Experience a whole new level of immersion as you co
 - freezing furnace minecarts with non-powered booster rails (to stop trains)
 - minecarts at high velocity kill mobs on the track (configurable)
 - arrows can't destroy minecarts (configurable)
+- coal carts which the furnace cart will refuel from
+- fuel consumption of the furnace minecart is configurable
 
 ### How it works:
+**Coupling:**
+
 The standard coupling tool is the chain. With this you click on two minecarts one after the other. The second one will follow the first one. With a train you work your way through from front to back. (I am working on making the order irrelevant).
- 
+
+**Coal Carts:**
+
+Furnace minecarts will, if already going, refuel from a coal cart nearby. Coal carts can be crafting with a minecart and a coal block. Coal carts will only interact with hoppers to refill but only coal and charcoal.
+
 ### What is planned:
- - an inventory for furnace minecarts, from which they can be filled automatically
- - chunk loading
- - rework of the linking system
+- safe chunk unloading
+- auto. chunk loading
+- making the linking order irrelevant
 
 ### What is not (yet) possible:
- - trains that push backwards (w.i.p.)
- - trains going around 2x2 curves
+- trains that push backwards (w.i.p.)
+- trains going around 2x2 curves
 
 ### Dependencies
 
