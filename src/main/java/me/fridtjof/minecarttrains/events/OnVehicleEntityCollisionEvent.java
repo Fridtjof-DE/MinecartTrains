@@ -8,33 +8,41 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;
 
-public class OnVehicleEntityCollisionEvent implements Listener {
+public class OnVehicleEntityCollisionEvent implements Listener
+{
 
     static MinecartTrains plugin = MinecartTrains.getInstance();
 
     // killing entities when run over
     @EventHandler
-    public void onVehicleEntityCollision(VehicleEntityCollisionEvent event) {
+    public void onVehicleEntityCollision(VehicleEntityCollisionEvent event)
+    {
 
-        if(!plugin.configManager.mainConfig.getConfig().getBoolean("trains.run_over_entities")) {
+        if(!plugin.configManager.mainConfig.getConfig().getBoolean("trains.run_over_entities"))
+        {
             return;
         }
 
         Vehicle vehicle = event.getVehicle();
         Entity  entity = event.getEntity();
 
-        if(!(vehicle instanceof Minecart)) {
+        if(!(vehicle instanceof Minecart))
+        {
             return;
         }
-        if(entity instanceof Minecart) {
+        if(entity instanceof Minecart)
+        {
             return;
         }
-        if(!(entity instanceof Damageable)) {
+        if(!(entity instanceof Damageable))
+        {
             return;
         }
 
-        if(vehicle instanceof RideableMinecart) {
-            if(vehicle.getPassenger() == null) {
+        if(vehicle instanceof RideableMinecart)
+        {
+            if(vehicle.getPassenger() == null)
+            {
                 return;
             }
         }
@@ -45,7 +53,8 @@ public class OnVehicleEntityCollisionEvent implements Listener {
             return;
         }
 
-        if(vehicle.getVelocity().length() < plugin.configManager.mainConfig.getConfig().getDouble("trains.run_over_entities_min_velocity")) {
+        if(vehicle.getVelocity().length() < plugin.configManager.mainConfig.getConfig().getDouble("trains.run_over_entities_min_velocity"))
+        {
             return;
         }
 

@@ -12,6 +12,7 @@ public class OnProjectileHitEvent implements Listener {
     static MinecartTrains plugin = MinecartTrains.getInstance();
     boolean cancelBeHit = plugin.configManager.mainConfig.getConfig().getBoolean("trains.can_get_hit_by_arrows");
 
+    //canceling arrow hit
     @EventHandler
     public void onProjectileHitEvent(ProjectileHitEvent event)
     {

@@ -1,47 +1,62 @@
-package me.fridtjof.minecarttrains;
+package me.fridtjof.minecarttrains.managers;
 
 import me.fridtjof.puddingapi.bukkit.utils.Logger;
 import me.fridtjof.puddingapi.bukkit.utils.YamlConfig;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class ConfigManager {
+import java.util.Collections;
+
+public class ConfigManager
+{
 
     JavaPlugin plugin;
 
     private Logger logger;
     public YamlConfig mainConfig, lobbyConfig, dataFile, messagesFile;
 
-    public ConfigManager(JavaPlugin plugin) {
+    public ConfigManager(JavaPlugin plugin)
+    {
         this.plugin = plugin;
         logger = new Logger(plugin);
         reloadConfigs();
     }
 
-    public void reloadConfigs() {
+    public void reloadConfigs()
+    {
         loadMainConfig();
         loadMessagesFile();
     }
 
 
-    public void loadMainConfig() {
+    public void loadMainConfig()
+    {
         mainConfig = new YamlConfig(plugin.getDataFolder(), "config");
-        mainConfig.getConfig().options().header("This is the main configuration file");
+
+        //TODO change some _ to . in v2.0.0
+
+        mainConfig.getConfig().options().setHeader(Collections.singletonList("This is the main configuration file"));
 
         mainConfig.getConfig().addDefault("config_version", 1);
 
         mainConfig.getConfig().addDefault("trains.run_over_entities", true);
         mainConfig.getConfig().addDefault("trains.run_over_entities_min_velocity", 1.8D);
+
         mainConfig.getConfig().addDefault("trains.coupling_tool", Material.CHAIN.toString());
 
         mainConfig.getConfig().addDefault("trains.can_get_hit_by_arrows", false);
+
+        mainConfig.getConfig().addDefault("trains.fuel_consumption_per_tick", 1);
+        mainConfig.getConfig().addDefault("trains.fuel_refill_only_from_fuel_cart", true);
+        mainConfig.getConfig().addDefault("trains.fuel_cart_name", "Coal Cart");
 
         mainConfig.getConfig().options().copyDefaults(true);
         mainConfig.save();
         logger.info("Successfully (re)loaded config.yml");
     }
 
-    public void loadMessagesFile() {
+    public void loadMessagesFile()
+    {
         messagesFile = new YamlConfig(plugin.getDataFolder(), "messages");
         messagesFile.getConfig().options().header("This is the localization file.");
 
