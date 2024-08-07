@@ -22,12 +22,16 @@ public class OnPlayerInteractEntityEvent implements Listener
     // --> coupling tool
     static MinecartTrains plugin = MinecartTrains.getInstance();
 
+
+    // minecart storage
     Map<String, Integer> selectedCarts = new HashMap<String, Integer>();
     Map<String, UUID> firstCarts = new HashMap<String, UUID>();
     Map<String, UUID> secondCarts = new HashMap<String, UUID>();
     Map<String, Long> lastCouplings = new HashMap<String, Long>();
 
+    // get config vars
     Material couplingTool = Material.getMaterial(plugin.configManager.mainConfig.getConfig().getString("trains.coupling_tool"));
+    double maxDistance = plugin.configManager.physicsConfig.getConfig().getDouble("coupling.max_distance");
 
     LinkageManager linkageManager = new LinkageManager();
 
@@ -88,12 +92,14 @@ public class OnPlayerInteractEntityEvent implements Listener
             Entity firstCart = Bukkit.getEntity(firstCarts.get(playerId));
             Entity secondCart = Bukkit.getEntity(secondCarts.get(playerId));
 
-            if(firstCart.getLocation().distance(secondCart.getLocation()) > 3)
+            // check distance
+            if(firstCart.getLocation().distance(secondCart.getLocation()) > maxDistance)
             {
                 player.sendMessage(plugin.configManager.messagesFile.getConfig().getString("trains.coupling_failed_distance"));
                 return;
             }
 
+            // check trying to couple with itself
             if(firstCart == secondCart)
             {
                 player.sendMessage(plugin.configManager.messagesFile.getConfig().getString("trains.coupling_failed_self"));
