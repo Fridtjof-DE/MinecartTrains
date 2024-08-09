@@ -22,6 +22,7 @@ Introducing Minecart Trains! Experience a whole new level of immersion as you co
 - arrows can't destroy minecarts (configurable)
 - coal carts which the furnace cart will refuel from
 - fuel consumption of the furnace minecart is configurable
+- hsrails compatibility
 
 ### How it works:
 **Coupling:**
@@ -36,6 +37,7 @@ Furnace minecarts will, if already going, refuel from a coal cart nearby. Coal c
 - safe chunk unloading
 - auto. chunk loading
 - making the linking order irrelevant
+- some kind of fuel gauge
 
 ### What is not (yet) possible:
 - trains that push backwards (w.i.p.)
