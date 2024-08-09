@@ -65,8 +65,8 @@ public class ConfigManager
         physicsConfig.getConfig().addDefault("config_version", 1);
 
         physicsConfig.getConfig().addDefault("coupling.max_distance", 3.5);
-        physicsConfig.getConfig().addDefault("link.speed.pull", 4.25);
-        physicsConfig.getConfig().addDefault("link.speed.push", 8.5);
+        physicsConfig.getConfig().addDefault("link.speed.pull", 1);
+        physicsConfig.getConfig().addDefault("link.speed.push", 32);
         physicsConfig.getConfig().addDefault("link.distance.max", 9.5);
         physicsConfig.getConfig().addDefault("link.distance.min", 0.7);
         physicsConfig.getConfig().addDefault("link.distance.pull-push_aimed", 1.6);
