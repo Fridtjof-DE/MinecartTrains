@@ -12,7 +12,7 @@
     <name>MinecartTrains</name>
 
     <properties>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <puddingapi.jar>${project.basedir}/../PuddingAPI/builds/PuddingAPI-2312201546.jar</puddingapi.jar>
     </properties>
