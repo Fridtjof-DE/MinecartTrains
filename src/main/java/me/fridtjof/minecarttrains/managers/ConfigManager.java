@@ -15,24 +15,40 @@ public class ConfigManager
     private Logger logger;
     public YamlConfig mainConfig, physicsConfig, messagesFile;
 
+    public static int mainConfigVersion = 2;
+    public static int physicsConfigVersion = 1;
+    public static int languageConfigVersion = 1;
+
     public ConfigManager(JavaPlugin plugin)
     {
         this.plugin = plugin;
         logger = new Logger(plugin);
+        setupConfigs();
+        checkConfigVersions();
         reloadConfigs();
     }
 
-    public void reloadConfigs()
+    private void setupConfigs()
+    {
+        mainConfig = new YamlConfig(plugin.getDataFolder(), "config");
+        physicsConfig = new YamlConfig(plugin.getDataFolder(), "physics");
+        messagesFile = new YamlConfig(plugin.getDataFolder(), "messages");
+    }
+
+    private void checkConfigVersions()
+    {
+        //TODO
+    }
+
+    private void reloadConfigs()
     {
         loadMainConfig();
         loadPhysicsConfig();
         loadMessagesFile();
     }
 
-    public void loadMainConfig()
+    private void loadMainConfig()
     {
-        mainConfig = new YamlConfig(plugin.getDataFolder(), "config");
-
         mainConfig.getConfig().options().setHeader(Collections.singletonList("This is the main configuration file"));
 
         //TODO improve naming - maybe in 2.0.0?
@@ -56,10 +72,8 @@ public class ConfigManager
         logger.info("Successfully (re)loaded config.yml");
     }
 
-    public void loadPhysicsConfig()
+    private void loadPhysicsConfig()
     {
-        physicsConfig = new YamlConfig(plugin.getDataFolder(), "physics");
-
         physicsConfig.getConfig().options().setHeader(Collections.singletonList("This is the physics configuration file - Handle with care! - Default values by @Wallaceman105"));
 
         physicsConfig.getConfig().addDefault("config_version", 1);
@@ -78,9 +92,8 @@ public class ConfigManager
         logger.info("Successfully (re)loaded physics.yml");
     }
 
-    public void loadMessagesFile()
+    private void loadMessagesFile()
     {
-        messagesFile = new YamlConfig(plugin.getDataFolder(), "messages");
         messagesFile.getConfig().options().header("This is the localization file.");
 
         messagesFile.getConfig().addDefault("trains.coupling_successful", "Coupling successful!");
