@@ -52,6 +52,11 @@ public class OnInventoryMoveItemEvent implements Listener
     @EventHandler
     public void onMoveItemIntoFuelCartEvent(InventoryMoveItemEvent event)
     {
+        if(!doHopperLogic)
+        {
+            return;
+        }
+
         if(!(event.getDestination().getHolder() instanceof StorageMinecart))
         {
             return;
