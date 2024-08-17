@@ -5,6 +5,7 @@ import me.fridtjof.puddingapi.bukkit.utils.YamlConfig;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.Collections;
 
 public class ConfigManager
@@ -17,7 +18,7 @@ public class ConfigManager
 
     public static int mainConfigVersion = 2;
     public static int physicsConfigVersion = 1;
-    public static int languageConfigVersion = 1;
+    public static String versionStringName = "config_version";
 
     public ConfigManager(JavaPlugin plugin)
     {
@@ -25,6 +26,8 @@ public class ConfigManager
         logger = new Logger(plugin);
         setupConfigs();
         checkConfigVersions();
+        //2nd time to overwrite renamed ones
+        setupConfigs();
         reloadConfigs();
     }
 
@@ -37,7 +40,38 @@ public class ConfigManager
 
     private void checkConfigVersions()
     {
-        //TODO
+        checkConfigVersion(mainConfig, versionStringName, mainConfigVersion);
+        checkConfigVersion(physicsConfig, versionStringName, physicsConfigVersion);
+    }
+
+    //TODO move to PuddingAPI
+    private void checkConfigVersion(YamlConfig config, String versionStringName, int wantedVersion)
+    {
+        if(!config.getConfig().contains(versionStringName))
+        {
+            return;
+        }
+        if(config.getConfig().getInt(versionStringName) == wantedVersion)
+        {
+            return;
+        }
+
+
+        String filePath = config.getFile().getAbsolutePath();
+
+        File renamedFile = new File(filePath + "_backup");
+
+        int backupCount = 0;
+
+        while(renamedFile.exists())
+        {
+            backupCount++;
+            renamedFile = new File(filePath + "_backup_" + backupCount);
+        }
+
+        config.getFile().renameTo(renamedFile);
+
+        logger.warn("The old " + config.getName() + " was replaced by a new version of the default file due to an update");
     }
 
     private void reloadConfigs()
@@ -51,21 +85,20 @@ public class ConfigManager
     {
         mainConfig.getConfig().options().setHeader(Collections.singletonList("This is the main configuration file"));
 
-        //TODO improve naming - maybe in 2.0.0?
+        mainConfig.getConfig().addDefault(versionStringName, mainConfigVersion);
 
-        mainConfig.getConfig().addDefault("config_version", 1);
+        mainConfig.getConfig().addDefault("trains.run_over.entities", true);
+        mainConfig.getConfig().addDefault("trains.run_over.min_velocity", 1.8D);
+        mainConfig.getConfig().addDefault("trains.run_over.damage", 10000);
 
-        mainConfig.getConfig().addDefault("trains.run_over_entities", true);
-        mainConfig.getConfig().addDefault("trains.run_over_entities_min_velocity", 1.8D);
-
-        mainConfig.getConfig().addDefault("trains.coupling_tool", Material.CHAIN.toString());
+        mainConfig.getConfig().addDefault("trains.coupling.tool", Material.CHAIN.toString());
 
         mainConfig.getConfig().addDefault("trains.can_get_hit_by_arrows", false);
 
-        mainConfig.getConfig().addDefault("trains.fuel_consumption_per_tick", 1);
-        mainConfig.getConfig().addDefault("trains.fuel_refill_only_from_fuel_cart", true);
-        mainConfig.getConfig().addDefault("trains.fuel_cart_name", "Coal Cart");
-        mainConfig.getConfig().addDefault("trains.fuel_hopper_logic", true);
+        mainConfig.getConfig().addDefault("trains.fuel.consumption_per_tick", 1);
+        mainConfig.getConfig().addDefault("trains.fuel.refill_only_from_fuel_cart", true);
+        mainConfig.getConfig().addDefault("trains.fuel.cart_name", "Coal Cart");
+        mainConfig.getConfig().addDefault("trains.fuel.do_hopper_logic", true);
 
         mainConfig.getConfig().options().copyDefaults(true);
         mainConfig.save();
@@ -76,7 +109,7 @@ public class ConfigManager
     {
         physicsConfig.getConfig().options().setHeader(Collections.singletonList("This is the physics configuration file - Handle with care! - Default values by @Wallaceman105"));
 
-        physicsConfig.getConfig().addDefault("config_version", 1);
+        physicsConfig.getConfig().addDefault(versionStringName, physicsConfigVersion);
 
         physicsConfig.getConfig().addDefault("coupling.max_distance", 3.5);
         physicsConfig.getConfig().addDefault("link.speed.pull", 1);
@@ -94,7 +127,7 @@ public class ConfigManager
 
     private void loadMessagesFile()
     {
-        messagesFile.getConfig().options().header("This is the localization file.");
+        messagesFile.getConfig().options().header("This is the localization file.");;
 
         messagesFile.getConfig().addDefault("trains.coupling_successful", "Coupling successful!");
         messagesFile.getConfig().addDefault("trains.coupling_failed_distance", "Coupling failed! - The minecarts are too far apart!");

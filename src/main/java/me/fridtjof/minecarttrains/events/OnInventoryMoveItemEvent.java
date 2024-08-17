@@ -19,8 +19,8 @@ public class OnInventoryMoveItemEvent implements Listener
     static MinecartTrains plugin = MinecartTrains.getInstance();
 
     // config vars
-    private final String FUEL_CART_NAME = plugin.configManager.mainConfig.getConfig().getString("trains.fuel_cart_name");
-    boolean doHopperLogic = plugin.configManager.mainConfig.getConfig().getBoolean("trains.fuel_hopper_logic");
+    private final String FUEL_CART_NAME = plugin.configManager.mainConfig.getConfig().getString("trains.fuel.cart_name");
+    boolean doHopperLogic = plugin.configManager.mainConfig.getConfig().getBoolean("trains.fuel.do_hopper_logic");
 
     //stop hoppers from unloading fuel carts
     @EventHandler

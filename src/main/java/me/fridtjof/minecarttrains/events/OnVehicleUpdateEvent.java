@@ -23,7 +23,7 @@ public class OnVehicleUpdateEvent implements Listener
     LinkageManager linkageManager = new LinkageManager();
 
     // config vars
-    int fuelPerTick = plugin.configManager.mainConfig.getConfig().getInt("trains.fuel_consumption_per_tick");
+    int fuelPerTick = plugin.configManager.mainConfig.getConfig().getInt("trains.fuel.consumption_per_tick");
     double couplingPullSpeed = plugin.configManager.physicsConfig.getConfig().getDouble("link.speed.pull");
     double couplingPushSpeed = plugin.configManager.physicsConfig.getConfig().getDouble("link.speed.push");
     double maxDistance = plugin.configManager.physicsConfig.getConfig().getDouble("link.distance.max");
