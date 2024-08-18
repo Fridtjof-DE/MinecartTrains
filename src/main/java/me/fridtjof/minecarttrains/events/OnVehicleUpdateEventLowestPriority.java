@@ -22,9 +22,9 @@ public class OnVehicleUpdateEventLowestPriority implements Listener
     static MinecartTrains plugin = MinecartTrains.getInstance();
     LinkageManager linkageManager = new LinkageManager();
 
-    private final int FUEL_PER_TICK = plugin.configManager.mainConfig.getConfig().getInt("trains.fuel_consumption_per_tick");
-    private final boolean REFILL_ONLY_FROM_TENDER = plugin.configManager.mainConfig.getConfig().getBoolean("trains.fuel_refill_only_from_fuel_cart");
-    private final String FUEL_CART_NAME = plugin.configManager.mainConfig.getConfig().getString("trains.fuel_cart_name");
+    private final int FUEL_PER_TICK = plugin.configManager.mainConfig.getConfig().getInt("trains.fuel.consumption_per_tick");
+    private final boolean REFILL_ONLY_FROM_TENDER = plugin.configManager.mainConfig.getConfig().getBoolean("trains.fuel.refill_only_from_fuel_cart");
+    private final String FUEL_CART_NAME = plugin.configManager.mainConfig.getConfig().getString("trains.fuel.cart_name");
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void OnFuelEmptyEvent(VehicleUpdateEvent event) {

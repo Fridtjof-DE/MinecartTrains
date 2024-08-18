@@ -12,7 +12,7 @@ public class OnVehicleCreateEvent implements Listener
 
     static MinecartTrains plugin = MinecartTrains.getInstance();
 
-    private final String FUEL_CART_NAME = plugin.configManager.mainConfig.getConfig().getString("trains.fuel_cart_name");
+    private final String FUEL_CART_NAME = plugin.configManager.mainConfig.getConfig().getString("trains.fuel.cart_name");
 
     //create fuel cart
     @EventHandler

@@ -13,12 +13,17 @@ public class OnVehicleEntityCollisionEvent implements Listener
 
     static MinecartTrains plugin = MinecartTrains.getInstance();
 
+    // get config vars
+    boolean runOver = plugin.configManager.mainConfig.getConfig().getBoolean("trains.run_over.entities");
+    double damage = plugin.configManager.mainConfig.getConfig().getDouble("trains.run_over.damage");
+    double minVelocity = plugin.configManager.mainConfig.getConfig().getDouble("trains.run_over.min_velocity");
+
     // killing entities when run over
     @EventHandler
     public void onVehicleEntityCollision(VehicleEntityCollisionEvent event)
     {
 
-        if(!plugin.configManager.mainConfig.getConfig().getBoolean("trains.run_over_entities"))
+        if(!runOver)
         {
             return;
         }
@@ -53,15 +58,13 @@ public class OnVehicleEntityCollisionEvent implements Listener
             return;
         }
 
-        if(vehicle.getVelocity().length() < plugin.configManager.mainConfig.getConfig().getDouble("trains.run_over_entities_min_velocity"))
+        if(vehicle.getVelocity().length() < minVelocity)
         {
             return;
         }
 
         Damageable damageable = (Damageable) entity;
         //damageable.setHealth(0); this also killed player in gamemode 1
-        damageable.damage(10000, vehicle);
-
-        //System.out.println("" + vehicle.getVelocity().length());
+        damageable.damage(damage, vehicle);
     }
 }
