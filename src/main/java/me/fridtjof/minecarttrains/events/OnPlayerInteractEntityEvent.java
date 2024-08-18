@@ -30,7 +30,7 @@ public class OnPlayerInteractEntityEvent implements Listener
     Map<String, Long> lastCouplings = new HashMap<String, Long>();
 
     // get config vars
-    Material couplingTool = Material.getMaterial(plugin.configManager.mainConfig.getConfig().getString("trains.coupling_tool"));
+    Material couplingTool = Material.getMaterial(plugin.configManager.mainConfig.getConfig().getString("trains.coupling.tool"));
     double maxDistance = plugin.configManager.physicsConfig.getConfig().getDouble("coupling.max_distance");
 
     LinkageManager linkageManager = new LinkageManager();
