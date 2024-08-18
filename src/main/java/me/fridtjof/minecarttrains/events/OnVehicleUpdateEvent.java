@@ -28,9 +28,8 @@ public class OnVehicleUpdateEvent implements Listener
     double couplingPushSpeed = plugin.configManager.physicsConfig.getConfig().getDouble("link.speed.push");
     double maxDistance = plugin.configManager.physicsConfig.getConfig().getDouble("link.distance.max");
     double minDistance = plugin.configManager.physicsConfig.getConfig().getDouble("link.distance.min");
-    double aimedDistance = plugin.configManager.physicsConfig.getConfig().getDouble("link.distance.pull-push_aimed");
-    double pushDistance = plugin.configManager.physicsConfig.getConfig().getDouble("link.distance.push_apart_min");
-    double pullDistance = plugin.configManager.physicsConfig.getConfig().getDouble("link.distance.pull_together_min");
+    double aimedDistance = plugin.configManager.physicsConfig.getConfig().getDouble("link.distance.aimed");
+    double aimedDistanceTolerance = plugin.configManager.physicsConfig.getConfig().getDouble("link.distance.aimed_tolerance");
 
     @EventHandler
     public void onVehicleUpdate(VehicleUpdateEvent event)
@@ -125,12 +124,12 @@ public class OnVehicleUpdateEvent implements Listener
         More precise parameters helps to eliminate the 'jiggling' behavior that interferes with momentum
         Slower 'away' speeds compared to 'toward' speeds also help to eliminate 'jiggling' */
         // acceleration if distance to small
-        else if(distance < pushDistance)
+        else if(distance < (aimedDistance - aimedDistanceTolerance))
         {
             moveToward(minecart, parent, pushSpeed, (distance - aimedDistance));
         }
         // acceleration if distance to large
-        else if(distance > pullDistance)
+        else if(distance > (aimedDistance + aimedDistanceTolerance))
         {
             moveToward(minecart, parent, pullSpeed, (distance - aimedDistance));
         }

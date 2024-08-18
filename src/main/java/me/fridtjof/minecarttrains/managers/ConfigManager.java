@@ -17,7 +17,7 @@ public class ConfigManager
     public YamlConfig mainConfig, physicsConfig, messagesFile;
 
     public static int mainConfigVersion = 2;
-    public static int physicsConfigVersion = 1;
+    public static int physicsConfigVersion = 2;
     public static String versionStringName = "config_version";
 
     public ConfigManager(JavaPlugin plugin)
@@ -116,9 +116,9 @@ public class ConfigManager
         physicsConfig.getConfig().addDefault("link.speed.push", 32);
         physicsConfig.getConfig().addDefault("link.distance.max", 9.5);
         physicsConfig.getConfig().addDefault("link.distance.min", 0.7);
-        physicsConfig.getConfig().addDefault("link.distance.pull-push_aimed", 1.6);
-        physicsConfig.getConfig().addDefault("link.distance.push_apart_min", 1.599);
-        physicsConfig.getConfig().addDefault("link.distance.pull_together_min", 1.601);
+
+        physicsConfig.getConfig().addDefault("link.distance.aimed", 1.3);
+        physicsConfig.getConfig().addDefault("link.distance.aimed_tolerance", 0.001);
 
         physicsConfig.getConfig().options().copyDefaults(true);
         physicsConfig.save();
