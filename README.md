@@ -22,7 +22,7 @@ Introducing Minecart Trains! Experience a whole new level of immersion as you co
 - arrows can't destroy minecarts (configurable)
 - coal carts which the furnace cart will refuel from
 - fuel consumption of the furnace minecart is configurable
-- hsrails compatibility
+- hsrails compatibility (only on adapted railways)
 
 ### How it works:
 **Coupling:**
