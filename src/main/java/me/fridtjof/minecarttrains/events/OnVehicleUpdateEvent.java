@@ -5,6 +5,7 @@ import me.fridtjof.minecarttrains.MinecartTrains;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.RedstoneRail;
 import org.bukkit.entity.Entity;
@@ -20,16 +21,24 @@ public class OnVehicleUpdateEvent implements Listener
 {
 
     static MinecartTrains plugin = MinecartTrains.getInstance();
-    LinkageManager linkageManager = new LinkageManager();
+    LinkageManager linkageManager = plugin.linkageManager;
 
     // config vars
     int fuelPerTick = plugin.configManager.mainConfig.getConfig().getInt("trains.fuel.consumption_per_tick");
-    double couplingPullSpeed = plugin.configManager.physicsConfig.getConfig().getDouble("link.speed.pull");
-    double couplingPushSpeed = plugin.configManager.physicsConfig.getConfig().getDouble("link.speed.push");
+    double couplingPullSpeed = plugin.configManager.physicsConfig.getConfig().getDouble("link.low_speed.speed.pull");
+    double couplingPushSpeed = plugin.configManager.physicsConfig.getConfig().getDouble("link.low_speed.speed.push");
     double maxDistance = plugin.configManager.physicsConfig.getConfig().getDouble("link.distance.max");
     double minDistance = plugin.configManager.physicsConfig.getConfig().getDouble("link.distance.min");
-    double aimedDistance = plugin.configManager.physicsConfig.getConfig().getDouble("link.distance.aimed");
-    double aimedDistanceTolerance = plugin.configManager.physicsConfig.getConfig().getDouble("link.distance.aimed_tolerance");
+    double aimedDistance = plugin.configManager.physicsConfig.getConfig().getDouble("link.low_speed.distance.aimed");
+    double aimedDistanceTolerance = plugin.configManager.physicsConfig.getConfig().getDouble("link.low_speed.distance.aimed_tolerance");
+
+    double couplingPullSpeedHighSpeed = plugin.configManager.physicsConfig.getConfig().getDouble("link.high_speed.speed.pull");
+    double couplingPushSpeedHighSpeed = plugin.configManager.physicsConfig.getConfig().getDouble("link.high_speed.speed.push");
+    double aimedDistanceHighSpeed = plugin.configManager.physicsConfig.getConfig().getDouble("link.high_speed.distance.aimed");
+    double aimedDistanceToleranceHighSpeed = plugin.configManager.physicsConfig.getConfig().getDouble("link.high_speed.distance.aimed_tolerance");
+
+    double highSpeedGate = plugin.configManager.physicsConfig.getConfig().getDouble("link.high_speed.gate_speed");
+
 
     @EventHandler
     public void onVehicleUpdate(VehicleUpdateEvent event)
@@ -45,6 +54,8 @@ public class OnVehicleUpdateEvent implements Listener
         }
         minecart = (Minecart) vehicle;
 
+        // TODO DEBUG
+        System.out.println(minecart.getVelocity().length());
 
         // ensures the below function only works on trains, not on single minecarts
         if(!linkageManager.hasLink((minecart)))
@@ -99,6 +110,29 @@ public class OnVehicleUpdateEvent implements Listener
             return;
         }
 
+
+        //check if parent is in same world
+        World childWorld = minecart.getWorld();
+        World parentWorld = parent.getWorld();
+        if(childWorld != parentWorld)
+        {
+            linkageManager.removeLink(minecart);
+            return;
+        }
+
+
+        // may cause problems
+        //check if parent is derailed
+        Location minecartLocation = minecart.getLocation();
+        Material parentTrack = parentWorld.getBlockAt(parent.getLocation()).getType();
+        Material parentTrackOnHill = parentWorld.getBlockAt(parent.getLocation().add(0, -1, 0)).getType();
+        if(!isAnyKindOfTrack(parentTrack) && !isAnyKindOfTrack(parentTrackOnHill))
+        {
+            linkageManager.removeLink(minecart);
+            return;
+        }
+
+
         // defines the distance value as (parent's location)-(child's location)
         double distance = minecart.getLocation().distance(parent.getLocation());
 
@@ -106,8 +140,42 @@ public class OnVehicleUpdateEvent implements Listener
         to avoid breaking trains during acceleration.
         Values in excess of 5 require more precision for the 'else if' statements, or else carts will overshoot
         and collide, disrupting momentum and causing the 'jiggle' bug.*/
-        double pullSpeed = couplingPullSpeed;
-        double pushSpeed = couplingPushSpeed;
+        double pullSpeed;
+        double pushSpeed;
+
+        //double maxDistance;
+        //double minDistance;
+        double aimedDistance;
+        double aimedDistanceTolerance;
+
+        //test
+        if(parent.getVelocity().length() <= highSpeedGate)
+        //low speed
+        {
+            pullSpeed = couplingPullSpeed;
+            aimedDistance = this.aimedDistance;
+            aimedDistanceTolerance = this.aimedDistanceTolerance;
+        }
+        else
+        {
+            //high speed
+            pullSpeed = couplingPullSpeedHighSpeed;
+            aimedDistance = this.aimedDistanceHighSpeed;
+            aimedDistanceTolerance = this.aimedDistanceToleranceHighSpeed;
+        }
+
+
+        if(minecart.getVelocity().length() <= highSpeedGate)
+        //low speed
+        {
+            pushSpeed = couplingPushSpeedHighSpeed;
+        }
+        else
+        {
+            //high speed
+            pushSpeed = couplingPushSpeedHighSpeed;
+        }
+
 
         /* Sets max/min distance for links. Shorter distances are more reliable along corners, however, until the
         linkageManager can be reworked, longer maximums are needed to handle acceleration.
@@ -146,5 +214,28 @@ public class OnVehicleUpdateEvent implements Listener
         double z = childLoc.getZ() - parentLoc.getZ();
         Vector velocity = new Vector(x, y, z).normalize().multiply(-speed);
         child.setVelocity(velocity.multiply((distance * distance * distance)));
+    }
+
+
+    //TODO move to puddingapi
+    public boolean isAnyKindOfTrack(Material material)
+    {
+        if(material == Material.POWERED_RAIL)
+        {
+            return true;
+        }
+        if(material == Material.RAIL)
+        {
+            return true;
+        }
+        if(material == Material.ACTIVATOR_RAIL)
+        {
+            return true;
+        }
+        if(material == Material.DETECTOR_RAIL)
+        {
+            return true;
+        }
+        return false;
     }
 }

@@ -2,6 +2,7 @@ package me.fridtjof.minecarttrains;
 
 import me.fridtjof.minecarttrains.managers.ConfigManager;
 import me.fridtjof.minecarttrains.managers.EventManager;
+import me.fridtjof.minecarttrains.managers.LinkageManager;
 import me.fridtjof.minecarttrains.managers.RecipeManager;
 import me.fridtjof.puddingapi.bukkit.utils.*;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,6 +25,7 @@ public final class MinecartTrains extends JavaPlugin
     Logger logger = new Logger(this);
 
     public ConfigManager configManager;
+    public LinkageManager linkageManager;
 
     @Override
     public void onEnable()
@@ -32,6 +34,7 @@ public final class MinecartTrains extends JavaPlugin
         new PuddingAPIVersionChecker(this, logger, 2312201546L);
 
         configManager = new ConfigManager(this);
+        linkageManager = new LinkageManager();
 
         new RecipeManager();
         new EventManager(this);
