@@ -26,7 +26,7 @@ public class RecipeManager
         tenderItemMeta.setDisplayName(FUEL_CART_NAME);
         tenderItemStack.setItemMeta(tenderItemMeta);
 
-        NamespacedKey tenderKey = new NamespacedKey(plugin, FUEL_CART_NAME.toLowerCase().replaceAll(" ", "_"));
+        NamespacedKey tenderKey = new NamespacedKey(plugin, "fuel_cart");
 
         ShapelessRecipe tenderRecipe = new ShapelessRecipe(tenderKey, tenderItemStack);
 

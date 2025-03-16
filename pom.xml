@@ -6,7 +6,11 @@
 
     <groupId>me.fridtjof</groupId>
     <artifactId>minecarttrains</artifactId>
+<<<<<<< Updated upstream
     <version>1.4.0</version>
+=======
+    <version>1.4.1</version>
+>>>>>>> Stashed changes
     <packaging>jar</packaging>
 
     <name>MinecartTrains</name>
