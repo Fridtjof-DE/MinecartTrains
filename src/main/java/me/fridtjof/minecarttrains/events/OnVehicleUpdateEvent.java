@@ -10,6 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.type.RedstoneRail;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Minecart;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Vehicle;
 import org.bukkit.entity.minecart.PoweredMinecart;
 import org.bukkit.event.EventHandler;
@@ -25,12 +26,14 @@ public class OnVehicleUpdateEvent implements Listener
 
     // config vars
     int fuelPerTick = plugin.configManager.mainConfig.getConfig().getInt("trains.fuel.consumption_per_tick");
-    double couplingPullSpeed = plugin.configManager.physicsConfig.getConfig().getDouble("link.low_speed.speed.pull");
-    double couplingPushSpeed = plugin.configManager.physicsConfig.getConfig().getDouble("link.low_speed.speed.push");
+
     double maxDistance = plugin.configManager.physicsConfig.getConfig().getDouble("link.distance.max");
     double minDistance = plugin.configManager.physicsConfig.getConfig().getDouble("link.distance.min");
-    double aimedDistance = plugin.configManager.physicsConfig.getConfig().getDouble("link.low_speed.distance.aimed");
-    double aimedDistanceTolerance = plugin.configManager.physicsConfig.getConfig().getDouble("link.low_speed.distance.aimed_tolerance");
+
+    double couplingPullSpeedLowSpeed = plugin.configManager.physicsConfig.getConfig().getDouble("link.low_speed.speed.pull");
+    double couplingPushSpeedLowSpeed = plugin.configManager.physicsConfig.getConfig().getDouble("link.low_speed.speed.push");
+    double aimedDistanceLowSpeed = plugin.configManager.physicsConfig.getConfig().getDouble("link.low_speed.distance.aimed");
+    double aimedDistanceToleranceLowSpeed = plugin.configManager.physicsConfig.getConfig().getDouble("link.low_speed.distance.aimed_tolerance");
 
     double couplingPullSpeedHighSpeed = plugin.configManager.physicsConfig.getConfig().getDouble("link.high_speed.speed.pull");
     double couplingPushSpeedHighSpeed = plugin.configManager.physicsConfig.getConfig().getDouble("link.high_speed.speed.push");
@@ -54,8 +57,16 @@ public class OnVehicleUpdateEvent implements Listener
         }
         minecart = (Minecart) vehicle;
 
-        // TODO DEBUG
-        System.out.println(minecart.getVelocity().length());
+        //DEBUG
+        if(!minecart.getPassengers().isEmpty())
+        {
+            Entity passenger = minecart.getPassengers().get(0);
+            if((passenger instanceof Player))
+            {
+                double shownSpeed = minecart.getVelocity().length() * 72;
+                passenger.sendMessage("Speed: " + (int)shownSpeed + " km/h");
+            }
+        }
 
         // ensures the below function only works on trains, not on single minecarts
         if(!linkageManager.hasLink((minecart)))
@@ -143,18 +154,16 @@ public class OnVehicleUpdateEvent implements Listener
         double pullSpeed;
         double pushSpeed;
 
-        //double maxDistance;
-        //double minDistance;
         double aimedDistance;
         double aimedDistanceTolerance;
 
-        //test
+        // sets the parts pull vars based on the speed of the parent
         if(parent.getVelocity().length() <= highSpeedGate)
-        //low speed
         {
-            pullSpeed = couplingPullSpeed;
-            aimedDistance = this.aimedDistance;
-            aimedDistanceTolerance = this.aimedDistanceTolerance;
+            //low speed
+            pullSpeed = couplingPullSpeedLowSpeed;
+            aimedDistance = this.aimedDistanceLowSpeed;
+            aimedDistanceTolerance = this.aimedDistanceToleranceLowSpeed;
         }
         else
         {
@@ -165,10 +174,11 @@ public class OnVehicleUpdateEvent implements Listener
         }
 
 
+        // sets the carts push speed based on its own speed
         if(minecart.getVelocity().length() <= highSpeedGate)
-        //low speed
         {
-            pushSpeed = couplingPushSpeedHighSpeed;
+            //low speed
+            pushSpeed = couplingPushSpeedLowSpeed;
         }
         else
         {
