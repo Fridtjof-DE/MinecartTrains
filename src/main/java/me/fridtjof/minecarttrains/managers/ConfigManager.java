@@ -16,7 +16,7 @@ public class ConfigManager
     private Logger logger;
     public YamlConfig mainConfig, physicsConfig, messagesFile;
 
-    public static int mainConfigVersion = 3;
+    public static int mainConfigVersion = 4;
     public static int physicsConfigVersion = 4;
     public static String versionStringName = "config_version";
 
@@ -100,7 +100,8 @@ public class ConfigManager
         mainConfig.getConfig().addDefault("trains.fuel.cart_name", "Coal Cart");
         mainConfig.getConfig().addDefault("trains.fuel.do_hopper_logic", true);
 
-        mainConfig.getConfig().addDefault("tracks.high_speed.bed_block", Material.REDSTONE_BLOCK.toString());
+        mainConfig.getConfig().addDefault("tracks.high_speed_tracks.enable", true);
+        mainConfig.getConfig().addDefault("tracks.high_speed_tracks.bed_block", Material.REDSTONE_BLOCK.toString());
 
         mainConfig.getConfig().options().copyDefaults(true);
         mainConfig.save();
