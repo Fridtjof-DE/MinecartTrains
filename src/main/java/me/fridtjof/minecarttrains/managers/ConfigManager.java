@@ -16,8 +16,8 @@ public class ConfigManager
     private Logger logger;
     public YamlConfig mainConfig, physicsConfig, messagesFile;
 
-    public static int mainConfigVersion = 2;
-    public static int physicsConfigVersion = 2;
+    public static int mainConfigVersion = 4;
+    public static int physicsConfigVersion = 4;
     public static String versionStringName = "config_version";
 
     public ConfigManager(JavaPlugin plugin)
@@ -100,6 +100,9 @@ public class ConfigManager
         mainConfig.getConfig().addDefault("trains.fuel.cart_name", "Coal Cart");
         mainConfig.getConfig().addDefault("trains.fuel.do_hopper_logic", true);
 
+        mainConfig.getConfig().addDefault("tracks.high_speed_tracks.enable", true);
+        mainConfig.getConfig().addDefault("tracks.high_speed_tracks.bed_block", Material.REDSTONE_BLOCK.toString());
+
         mainConfig.getConfig().options().copyDefaults(true);
         mainConfig.save();
         logger.info("Successfully (re)loaded config.yml");
@@ -112,13 +115,24 @@ public class ConfigManager
         physicsConfig.getConfig().addDefault(versionStringName, physicsConfigVersion);
 
         physicsConfig.getConfig().addDefault("coupling.max_distance", 3.5);
-        physicsConfig.getConfig().addDefault("link.speed.pull", 1);
-        physicsConfig.getConfig().addDefault("link.speed.push", 32);
+
         physicsConfig.getConfig().addDefault("link.distance.max", 9.5);
         physicsConfig.getConfig().addDefault("link.distance.min", 0.7);
 
-        physicsConfig.getConfig().addDefault("link.distance.aimed", 1.3);
-        physicsConfig.getConfig().addDefault("link.distance.aimed_tolerance", 0.001);
+        physicsConfig.getConfig().addDefault("link.low_speed.speed.pull", 1);
+        physicsConfig.getConfig().addDefault("link.low_speed.speed.push", 32);
+        physicsConfig.getConfig().addDefault("link.low_speed.distance.aimed", 1.3);
+        physicsConfig.getConfig().addDefault("link.low_speed.distance.aimed_tolerance", 0.001);
+
+        physicsConfig.getConfig().addDefault("link.high_speed.speed.pull", 4);
+        physicsConfig.getConfig().addDefault("link.high_speed.speed.push", 4);
+        physicsConfig.getConfig().addDefault("link.high_speed.distance.aimed", 1.5);
+        physicsConfig.getConfig().addDefault("link.high_speed.distance.aimed_tolerance", 0.001);
+
+        physicsConfig.getConfig().addDefault("link.high_speed.gate_speed", 1.5);
+
+        physicsConfig.getConfig().addDefault("track.high_speed.max_speed", 4);
+        physicsConfig.getConfig().addDefault("track.high_speed.acceleration", 0.008);
 
         physicsConfig.getConfig().options().copyDefaults(true);
         physicsConfig.save();
