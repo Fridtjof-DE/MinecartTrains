@@ -20,13 +20,19 @@ public class OnVehicleMoveEvent implements Listener {
     LinkageManager linkageManager = plugin.linkageManager;
 
     double defaultSpeed = 0.4;
-    Material highSpeedBlock = Material.getMaterial(plugin.configManager.mainConfig.getConfig().getString("tracks.high_speed.bed_block"));
+    boolean doHighSpeed = plugin.configManager.mainConfig.getConfig().getBoolean("tracks.high_speed_tracks.enable");
+    Material highSpeedBlock = Material.getMaterial(plugin.configManager.mainConfig.getConfig().getString("tracks.high_speed_tracks.bed_block"));
     double maxHighSpeedSpeed = plugin.configManager.physicsConfig.getConfig().getDouble("track.high_speed.max_speed");
     double acceleration = plugin.configManager.physicsConfig.getConfig().getDouble("track.high_speed.acceleration");
 
     @EventHandler
     public void onVehicleMove(VehicleMoveEvent event)
     {
+        if(!doHighSpeed)
+        {
+            return;
+        }
+
         // only continue if vehicle is a minecart
         if(!(event.getVehicle() instanceof Minecart))
         {
