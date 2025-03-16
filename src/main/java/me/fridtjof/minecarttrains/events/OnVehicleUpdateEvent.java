@@ -58,7 +58,7 @@ public class OnVehicleUpdateEvent implements Listener
         minecart = (Minecart) vehicle;
 
         //DEBUG
-        if(!minecart.getPassengers().isEmpty())
+        /*if(!minecart.getPassengers().isEmpty())
         {
             Entity passenger = minecart.getPassengers().get(0);
             if((passenger instanceof Player))
@@ -66,7 +66,7 @@ public class OnVehicleUpdateEvent implements Listener
                 double shownSpeed = minecart.getVelocity().length() * 72;
                 passenger.sendMessage("Speed: " + (int)shownSpeed + " km/h");
             }
-        }
+        }*/
 
         // ensures the below function only works on trains, not on single minecarts
         if(!linkageManager.hasLink((minecart)))
