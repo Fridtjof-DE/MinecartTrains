@@ -75,30 +75,5 @@ public class OnVehicleMoveEvent implements Listener {
         {
             minecart.setMaxSpeed(maxHighSpeedSpeed);
         }
-
-        //custom rails
-        /*
-        if(track.getType() != Material.RAIL)
-        {
-            minecart.setMaxSpeed(0.4);
-            return;
-        }
-        minecart.setMaxSpeed(0.4 * 4);
-
-        double currentSpeed = minecart.getVelocity().length();
-        double minSpeed = 0.1;
-        double copperSpeed = 2.5;
-        double boost = 1.05;
-
-        if(bed.getType() == Material.COPPER_BLOCK)
-        {
-            if((currentSpeed < minSpeed) || currentSpeed > copperSpeed)
-            {
-                return;
-            }
-            Vector acceleration = minecart.getVelocity().multiply(boost);
-
-            minecart.setVelocity(acceleration);
-        }*/
     }
 }
