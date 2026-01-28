@@ -170,7 +170,7 @@ public class ConfigManager
                 msg = "Found legacy Material name 'CHAIN'. Replacing with new default!";
             }
 
-            plugin.getLogger().warning(msg);
+            logger.warning(msg);
             mainConfig.getConfig().set("trains.coupling.tool", toolMaterialDefault);
             mainConfig.save();
         }
