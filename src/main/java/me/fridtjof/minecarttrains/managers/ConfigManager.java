@@ -1,12 +1,12 @@
 package me.fridtjof.minecarttrains.managers;
 
-import me.fridtjof.puddingapi.bukkit.utils.Logger;
 import me.fridtjof.puddingapi.bukkit.utils.YamlConfig;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.Collections;
+import java.util.logging.Logger;
 
 public class ConfigManager
 {
@@ -20,10 +20,12 @@ public class ConfigManager
     public static int physicsConfigVersion = 4;
     public static String versionStringName = "config_version";
 
+    public static String toolMaterialDefault = Material.IRON_CHAIN.toString();
+
     public ConfigManager(JavaPlugin plugin)
     {
         this.plugin = plugin;
-        logger = new Logger(plugin);
+        logger = plugin.getLogger();
         setupConfigs();
         checkConfigVersions();
         //2nd time to overwrite renamed ones
@@ -71,12 +73,13 @@ public class ConfigManager
 
         config.getFile().renameTo(renamedFile);
 
-        logger.warn("The old " + config.getName() + " was replaced by a new version of the default file due to an update");
+        logger.warning("The old " + config.getName() + " was replaced by a new version of the default file due to an update");
     }
 
     private void reloadConfigs()
     {
         loadMainConfig();
+        checkMaterial();
         loadPhysicsConfig();
         loadMessagesFile();
     }
@@ -91,7 +94,7 @@ public class ConfigManager
         mainConfig.getConfig().addDefault("trains.run_over.min_velocity", 1.8D);
         mainConfig.getConfig().addDefault("trains.run_over.damage", 10000);
 
-        mainConfig.getConfig().addDefault("trains.coupling.tool", Material.CHAIN.toString());
+        mainConfig.getConfig().addDefault("trains.coupling.tool", toolMaterialDefault);
 
         mainConfig.getConfig().addDefault("trains.can_get_hit_by_arrows", false);
 
@@ -154,5 +157,22 @@ public class ConfigManager
         messagesFile.getConfig().options().copyDefaults(true);
         messagesFile.save();
         logger.info("Successfully (re)loaded messages.yml");
+    }
+
+    public void checkMaterial()
+    {
+        //check is Material of tool is valid
+        String toolMaterial = mainConfig.getConfig().getString("trains.coupling.tool");
+        if((toolMaterial == null) || (Material.getMaterial(toolMaterial) == null)) {
+            String msg = "Could not resolve coupling tool Material! - Replacing with default!";
+
+            if (toolMaterial == "CHAIN") {
+                msg = "Found legacy Material name 'CHAIN'. Replacing with new default!";
+            }
+
+            plugin.getLogger().warning(msg);
+            mainConfig.getConfig().set("trains.coupling.tool", toolMaterialDefault);
+            mainConfig.save();
+        }
     }
 }
