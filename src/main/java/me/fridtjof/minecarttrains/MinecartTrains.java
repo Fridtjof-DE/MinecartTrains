@@ -30,8 +30,7 @@ public final class MinecartTrains extends JavaPlugin
     @Override
     public void onEnable()
     {
-
-        new PuddingAPIVersionChecker(this, logger, 2312201546L);
+        new PuddingAPIVersionChecker(this, 2602011954L);
 
         configManager = new ConfigManager(this);
         linkageManager = new LinkageManager();

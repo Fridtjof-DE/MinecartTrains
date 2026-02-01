@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 public class ConfigManager
@@ -19,8 +20,6 @@ public class ConfigManager
     public static int mainConfigVersion = 4;
     public static int physicsConfigVersion = 4;
     public static String versionStringName = "config_version";
-
-    public static String toolMaterialDefault = Material.IRON_CHAIN.toString();
 
     public ConfigManager(JavaPlugin plugin)
     {
@@ -94,7 +93,7 @@ public class ConfigManager
         mainConfig.getConfig().addDefault("trains.run_over.min_velocity", 1.8D);
         mainConfig.getConfig().addDefault("trains.run_over.damage", 10000);
 
-        mainConfig.getConfig().addDefault("trains.coupling.tool", toolMaterialDefault);
+        mainConfig.getConfig().addDefault("trains.coupling.tool", "IRON_CHAIN");
 
         mainConfig.getConfig().addDefault("trains.can_get_hit_by_arrows", false);
 
@@ -162,16 +161,26 @@ public class ConfigManager
     public void checkMaterial()
     {
         //check is Material of tool is valid
-        String toolMaterial = mainConfig.getConfig().getString("trains.coupling.tool");
-        if((toolMaterial == null) || (Material.getMaterial(toolMaterial) == null)) {
+        String toolMaterialConfig = mainConfig.getConfig().getString("trains.coupling.tool");
+        if((toolMaterialConfig == null) || (Material.getMaterial(toolMaterialConfig) == null))
+        {
             String msg = "Could not resolve coupling tool Material! - Replacing with default!";
+            Material newToolMaterialDefault =  Material.STICK;
 
-            if (toolMaterial == "CHAIN") {
-                msg = "Found legacy Material name 'CHAIN'. Replacing with new default!";
+            // server lost support for the legacy chain naming
+            if(Material.getMaterial("CHAIN") == null)
+            {
+                newToolMaterialDefault = Material.getMaterial("IRON_CHAIN");
+            }
+
+            // server uses legacy naming for the iron chain
+            if(Material.getMaterial("IRON_CHAIN") == null)
+            {
+                newToolMaterialDefault = Material.getMaterial("CHAIN");
             }
 
             logger.warning(msg);
-            mainConfig.getConfig().set("trains.coupling.tool", toolMaterialDefault);
+            mainConfig.getConfig().set("trains.coupling.tool", newToolMaterialDefault.toString());
             mainConfig.save();
         }
     }

@@ -1,7 +1,7 @@
 name: MinecartTrains
 version: '${project.version}'
 main: me.fridtjof.minecarttrains.MinecartTrains
-api-version: '1.21.11'
+api-version: '1.21'
 authors: [ Fridtjof_DE ]
 website: https://www.fridtjof.me
 depend: [PuddingAPI]
