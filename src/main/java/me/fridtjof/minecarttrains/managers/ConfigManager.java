@@ -102,6 +102,8 @@ public class ConfigManager
         mainConfig.getConfig().addDefault("trains.fuel.cart_name", "Coal Cart");
         mainConfig.getConfig().addDefault("trains.fuel.do_hopper_logic", true);
 
+        mainConfig.getConfig().addDefault("trains.visuals.steam_particles", true);
+
         mainConfig.getConfig().addDefault("tracks.high_speed_tracks.enable", true);
         mainConfig.getConfig().addDefault("tracks.high_speed_tracks.bed_block", Material.REDSTONE_BLOCK.toString());
 

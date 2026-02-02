@@ -4,21 +4,19 @@ import me.fridtjof.minecarttrains.managers.ConfigManager;
 import me.fridtjof.minecarttrains.managers.EventManager;
 import me.fridtjof.minecarttrains.managers.LinkageManager;
 import me.fridtjof.minecarttrains.managers.RecipeManager;
+import me.fridtjof.minecarttrains.tasks.FurnaceCartSmokeTask;
 import me.fridtjof.puddingapi.bukkit.utils.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class MinecartTrains extends JavaPlugin
-{
+public final class MinecartTrains extends JavaPlugin {
 
     private static MinecartTrains instance;
 
-    public MinecartTrains()
-    {
+    public MinecartTrains() {
         instance = this;
     }
 
-    public static MinecartTrains getInstance()
-    {
+    public static MinecartTrains getInstance() {
         return instance;
     }
 
@@ -27,9 +25,10 @@ public final class MinecartTrains extends JavaPlugin
     public ConfigManager configManager;
     public LinkageManager linkageManager;
 
+    private FurnaceCartSmokeTask furnaceCartSmokeTask;
+
     @Override
-    public void onEnable()
-    {
+    public void onEnable() {
         new PuddingAPIVersionChecker(this, 2602011954L);
 
         configManager = new ConfigManager(this);
@@ -37,14 +36,18 @@ public final class MinecartTrains extends JavaPlugin
 
         new RecipeManager();
         new EventManager(this);
-        new ModrinthUpdateChecker(this,"plRff0I9", "spigot");
+        new ModrinthUpdateChecker(this, "plRff0I9", "spigot");
         new Metrics(this, 18918);
 
+        furnaceCartSmokeTask = new FurnaceCartSmokeTask(this, 10L);
+        furnaceCartSmokeTask.start();
     }
 
     @Override
-    public void onDisable()
-    {
+    public void onDisable() {
+        if (furnaceCartSmokeTask != null) {
+            furnaceCartSmokeTask.stop();
 
+        }
     }
 }
