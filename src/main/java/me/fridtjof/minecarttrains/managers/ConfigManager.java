@@ -6,7 +6,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.Collections;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 public class ConfigManager
@@ -103,6 +102,23 @@ public class ConfigManager
         mainConfig.getConfig().addDefault("trains.fuel.do_hopper_logic", true);
 
         mainConfig.getConfig().addDefault("trains.visuals.steam_particles", true);
+
+        // radius minecart will load
+        mainConfig.getConfig().addDefault("trains.chunk_loading.enable", true);
+        mainConfig.getConfig().addDefault("trains.chunk_loading.radius", 2);
+        // time until minecart will time out when stationary
+        mainConfig.getConfig().addDefault("trains.chunk_loading.abuse_protection.timeout.stationary.enable", true);
+        mainConfig.getConfig().addDefault("trains.chunk_loading.abuse_protection.timeout.stationary.duration", 300_000);
+        mainConfig.getConfig().addDefault("trains.chunk_loading.abuse_protection.timeout.stationary.exempt_furnace_minecarts", true);
+        // time until minecart will time out when moving in the same chunk
+        mainConfig.getConfig().addDefault("trains.chunk_loading.abuse_protection.timeout.mobile.enable", true);
+        mainConfig.getConfig().addDefault("trains.chunk_loading.abuse_protection.timeout.mobile.duration", 200_000);
+        // required history of individual chunks
+        mainConfig.getConfig().addDefault("trains.chunk_loading.abuse_protection.history.enable", true);
+        mainConfig.getConfig().addDefault("trains.chunk_loading.abuse_protection.history.size", 1);
+        // required progression in blocks
+        mainConfig.getConfig().addDefault("trains.chunk_loading.abuse_protection.movement_required.enable", true);
+        mainConfig.getConfig().addDefault("trains.chunk_loading.abuse_protection.movement_required.distance", 8.0);
 
         mainConfig.getConfig().addDefault("tracks.high_speed_tracks.enable", true);
         mainConfig.getConfig().addDefault("tracks.high_speed_tracks.bed_block", Material.REDSTONE_BLOCK.toString());

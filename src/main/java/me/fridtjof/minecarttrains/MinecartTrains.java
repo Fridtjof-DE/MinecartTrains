@@ -1,5 +1,6 @@
 package me.fridtjof.minecarttrains;
 
+import me.fridtjof.minecarttrains.events.MinecartChunkLoader;
 import me.fridtjof.minecarttrains.managers.ConfigManager;
 import me.fridtjof.minecarttrains.managers.EventManager;
 import me.fridtjof.minecarttrains.managers.LinkageManager;
@@ -27,6 +28,8 @@ public final class MinecartTrains extends JavaPlugin {
 
     private FurnaceCartSmokeTask furnaceCartSmokeTask;
 
+    private MinecartChunkLoader minecartChunkLoader;
+
     @Override
     public void onEnable() {
         new PuddingAPIVersionChecker(this, 2602011954L);
@@ -41,13 +44,21 @@ public final class MinecartTrains extends JavaPlugin {
 
         furnaceCartSmokeTask = new FurnaceCartSmokeTask(this, 10L);
         furnaceCartSmokeTask.start();
+
+        minecartChunkLoader = new MinecartChunkLoader(this, configManager);
     }
 
     @Override
     public void onDisable() {
-        if (furnaceCartSmokeTask != null) {
+        if(furnaceCartSmokeTask != null)
+        {
             furnaceCartSmokeTask.stop();
 
+        }
+
+        if(minecartChunkLoader != null)
+        {
+            minecartChunkLoader.activeChunks.keySet().forEach(minecartChunkLoader::removeAllTickets);
         }
     }
 }
